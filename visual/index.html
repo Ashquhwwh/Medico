@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>MediData Pro - Sistema de Gestión Médica Profesional</title>
+    <title>MediData Pro - App Médica Completa</title>
+    
+    <!-- ==================== CONFIGURACIÓN PWA ==================== -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MediData Pro">
+    <meta name="application-name" content="MediData Pro">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Iconos para la app -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAALuSURBVHgB7d3BcdswFIXRb0BpId1l6zSgNBB34S7SQbqL0kG6SAfpwg24A7sLd+HuooOwA7sL8eeRxiMe2fIlQDwC3wzH0UgiyI+LxwcgSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZKk30MALun9GgI4IQdwUg7ghBzASTmAE3IAJ+UATsgBnJQDOCEHcFIO4IQcwEk5gBNyACflAE7IAZyUAzghB3BSDgB+wI8fP5Ik3Z93AO0BcACtAcwBHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMABHMCB3szfZqfGxcdsM5AAAAAASUVORK5CYII=">
+    
     <!-- Librerías para Excel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -30,19 +43,20 @@
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-success: linear-gradient(135deg, #27ae60, #2ecc71);
             --gradient-danger: linear-gradient(135deg, #e74c3c, #c0392b);
+            --gradient-lab: linear-gradient(135deg, #8e44ad, #9b59b6);
         }
 
         body {
             background: var(--gradient-primary);
             min-height: 100vh;
-            padding: 25px;
+            padding: 15px;
             font-size: 16px;
         }
 
         /* Scrollbar personalizado */
         ::-webkit-scrollbar {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -65,8 +79,38 @@
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
-            padding: 30px;
+            padding: 20px;
             box-shadow: var(--box-shadow);
+        }
+
+        /* Botón de instalación PWA */
+        .install-pwa {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            z-index: 1000;
+            border: 2px solid white;
+        }
+
+        .install-pwa.show {
+            display: flex;
+        }
+
+        .install-pwa:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
         }
 
         /* Header mejorado */
@@ -75,9 +119,9 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 20px;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
             background: var(--gradient-primary);
             border-radius: var(--border-radius);
             color: white;
@@ -86,62 +130,62 @@
         .header-title {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .header-title h1 {
-            font-size: clamp(28px, 5vw, 36px);
+            font-size: clamp(24px, 5vw, 32px);
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .header-title i {
-            font-size: 50px;
+            font-size: 40px;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
         }
 
         .stats-container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .stat-card {
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(5px);
-            padding: 20px 30px;
+            padding: 15px 20px;
             border-radius: var(--border-radius);
             text-align: center;
-            min-width: 150px;
+            min-width: 120px;
             border: 1px solid rgba(255,255,255,0.3);
             transition: all 0.3s;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             background: rgba(255,255,255,0.3);
         }
 
         .stat-card span {
             display: block;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 5px;
         }
 
         .stat-card label {
-            font-size: 14px;
+            font-size: 12px;
             opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Formulario mejorado */
+        /* Formulario */
         .form-section {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             border: 1px solid var(--light);
         }
@@ -149,30 +193,30 @@
         .form-title {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             color: var(--dark);
-            margin-bottom: 25px;
-            font-size: clamp(20px, 4vw, 24px);
+            margin-bottom: 20px;
+            font-size: clamp(18px, 4vw, 22px);
             border-bottom: 3px solid var(--secondary);
-            padding-bottom: 15px;
+            padding-bottom: 10px;
         }
 
         .form-title i {
             color: var(--secondary);
-            font-size: 28px;
+            font-size: 24px;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
         }
 
         .form-group label {
@@ -181,29 +225,23 @@
             font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .form-group label i {
             color: var(--secondary);
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .form-group input, 
         .form-group select, 
         .form-group textarea {
-            padding: 14px 18px;
+            padding: 12px;
             border: 2px solid var(--light);
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 15px;
             transition: all 0.3s;
             background: white;
-        }
-
-        .form-group input:hover, 
-        .form-group select:hover, 
-        .form-group textarea:hover {
-            border-color: var(--secondary);
         }
 
         .form-group input:focus, 
@@ -211,7 +249,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--secondary);
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .form-group input.error {
@@ -223,120 +261,353 @@
             color: var(--danger);
             font-size: 12px;
             margin-top: 5px;
+        }
+
+        /* ==================== SECCIÓN DE EXÁMENES MÉDICOS ==================== */
+        .examenes-section {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border: 1px solid var(--light);
+        }
+
+        .examenes-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+
+        .examen-tab {
+            padding: 10px 20px;
+            background: var(--light);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
+            gap: 8px;
+            color: var(--dark);
+        }
+
+        .examen-tab i {
+            color: var(--secondary);
+        }
+
+        .examen-tab:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .examen-tab:hover i {
+            color: white;
+        }
+
+        .examen-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .examen-tab.active i {
+            color: white;
+        }
+
+        .examenes-categoria {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .examenes-categoria.active {
+            display: grid;
+        }
+
+        .examen-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s;
+        }
+
+        .examen-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--secondary);
+        }
+
+        .examen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .examen-nombre {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .examen-categoria-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .examen-input {
+            display: flex;
+            flex-direction: column;
             gap: 5px;
         }
 
-        /* Botones mejorados */
+        .examen-input input {
+            padding: 8px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .examen-input input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .examen-unidad {
+            font-size: 11px;
+            color: #666;
+            text-align: right;
+        }
+
+        .examen-fecha {
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .btn-agregar-examen {
+            background: var(--gradient-lab);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-agregar-examen:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+
+        /* Lista de exámenes guardados */
+        .examenes-guardados {
+            margin-top: 30px;
+            border-top: 2px solid var(--light);
+            padding-top: 20px;
+        }
+
+        .examenes-guardados h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .examenes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .examen-guardado-card {
+            background: white;
+            border: 1px solid var(--light);
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .examen-guardado-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--light);
+        }
+
+        .examen-guardado-nombre {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .examen-guardado-categoria {
+            background: var(--light);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .examen-guardado-valor {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 10px 0;
+        }
+
+        .examen-guardado-unidad {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .examen-guardado-fecha {
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-eliminar-examen {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .examen-guardado-card:hover .btn-eliminar-examen {
+            opacity: 1;
+        }
+
+        /* Botones */
         .btn {
             background: var(--gradient-primary);
             color: white;
-            padding: 16px 32px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            width: auto;
-            min-width: 200px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            gap: 10px;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
         .btn-secondary {
             background: linear-gradient(135deg, #95a5a6, #7f8c8d);
         }
 
-        .btn-success {
-            background: var(--gradient-success);
-        }
-
-        .btn-danger {
-            background: var(--gradient-danger);
-        }
-
-        /* Sección de Excel mejorada */
+        /* Sección Excel */
         .excel-section {
             background: linear-gradient(135deg, #1e7e34, #27ae60, #2ecc71);
-            padding: 30px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: white;
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.3);
         }
 
         .excel-header {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .excel-header i {
-            font-size: 48px;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            font-size: 36px;
         }
 
         .excel-header h2 {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
         }
 
         .excel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
         }
 
         .btn-excel {
             background: white;
             color: #1e7e34;
-            padding: 18px 25px;
+            padding: 12px 15px;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 8px;
             transition: all 0.3s;
-            border: 2px solid transparent;
         }
 
         .btn-excel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .btn-excel i {
-            font-size: 24px;
-        }
-
-        /* Filtros avanzados */
+        /* Filtros */
         .filters-section {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-bottom: 30px;
-            border: 1px solid var(--light);
+            margin-bottom: 20px;
         }
 
         .filters-header {
@@ -344,116 +615,74 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .filters-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 22px;
-            color: var(--dark);
-        }
-
-        .filters-header h3 i {
-            color: var(--secondary);
-        }
-
-        .filter-actions {
-            display: flex;
             gap: 15px;
+            margin-bottom: 15px;
         }
 
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
         }
 
         .filter-group label {
             font-weight: 600;
             color: var(--dark);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 13px;
         }
 
         .filter-group input, .filter-group select {
-            padding: 14px;
+            padding: 10px;
             border: 2px solid var(--light);
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s;
-        }
-
-        .filter-group input:focus, .filter-group select:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
         }
 
         .btn-filter {
             background: var(--light);
             color: var(--dark);
-            padding: 14px 25px;
+            padding: 10px 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
-            transition: all 0.3s;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 600;
+            gap: 5px;
         }
 
         .btn-filter:hover {
             background: var(--secondary);
             color: white;
-            transform: translateY(-2px);
         }
 
-        /* Tabla mejorada */
+        /* Tabla */
         .table-container {
             background: white;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px;
+            padding: 15px 20px;
             background: var(--light);
             border-bottom: 3px solid var(--secondary);
         }
 
-        .table-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 22px;
-            color: var(--dark);
-        }
-
-        .table-controls {
-            display: flex;
-            gap: 15px;
-        }
-
         .table-wrapper {
             overflow-x: auto;
-            max-height: 600px;
+            max-height: 500px;
             overflow-y: auto;
         }
 
@@ -466,29 +695,22 @@
         th {
             background: var(--primary);
             color: white;
-            padding: 18px 15px;
+            padding: 15px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             position: sticky;
             top: 0;
             z-index: 10;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         td {
-            padding: 18px 15px;
+            padding: 12px 15px;
             border-bottom: 1px solid var(--light);
-            font-size: 14px;
-        }
-
-        tr {
-            transition: all 0.2s;
+            font-size: 13px;
         }
 
         tr:hover {
             background: rgba(52, 152, 219, 0.05);
-            transform: scale(1);
         }
 
         .code-display {
@@ -496,66 +718,55 @@
             font-weight: 600;
             color: var(--secondary);
             background: rgba(52, 152, 219, 0.1);
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            font-size: 13px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
         }
 
         .sexo-badge {
-            padding: 6px 15px;
-            border-radius: 30px;
-            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 600;
             display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .sexo-masculino {
             background: rgba(52, 152, 219, 0.15);
             color: #2980b9;
-            border: 1px solid rgba(52, 152, 219, 0.3);
         }
 
         .sexo-femenino {
             background: rgba(231, 76, 60, 0.15);
             color: #c0392b;
-            border: 1px solid rgba(231, 76, 60, 0.3);
         }
 
         .sexo-otro {
             background: rgba(46, 204, 113, 0.15);
             color: #27ae60;
-            border: 1px solid rgba(46, 204, 113, 0.3);
-        }
-
-        .observaciones-cell {
-            max-width: 250px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .action-buttons {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .btn-icon {
-            padding: 10px;
+            padding: 6px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 14px;
-            display: inline-flex;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
-            color: white;
+        }
+
+        .btn-view {
+            background: var(--secondary);
         }
 
         .btn-edit {
@@ -566,16 +777,11 @@
             background: var(--danger);
         }
 
-        .btn-view {
-            background: var(--secondary);
+        .btn-lab {
+            background: var(--gradient-lab);
         }
 
-        .btn-icon:hover {
-            transform: translateY(-3px) scale(1.1);
-            filter: brightness(1.1);
-        }
-
-        /* Modal mejorado */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -584,10 +790,10 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .modal.active {
@@ -597,19 +803,18 @@
         .modal-content {
             background: white;
             border-radius: var(--border-radius);
-            padding: 35px;
-            max-width: 600px;
+            padding: 25px;
+            max-width: 500px;
             width: 95%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            animation: modalSlideIn 0.4s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
         }
 
         @keyframes modalSlideIn {
             from {
-                transform: translateY(-50px);
+                transform: translateY(-30px);
                 opacity: 0;
             }
             to {
@@ -622,69 +827,45 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 3px solid var(--secondary);
-        }
-
-        .modal-header h2 {
-            color: var(--dark);
-            font-size: 26px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 32px;
+            font-size: 28px;
             cursor: pointer;
             color: var(--dark);
-            transition: all 0.3s;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .modal-close:hover {
-            color: var(--danger);
-            background: rgba(231, 76, 60, 0.1);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            margin-bottom: 25px;
         }
 
         .modal-footer {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: flex-end;
-            padding-top: 20px;
+            margin-top: 20px;
+            padding-top: 15px;
             border-top: 1px solid var(--light);
         }
 
-        /* Toast mejorado */
+        /* Toast */
         .toast {
             position: fixed;
-            top: 30px;
-            right: 30px;
+            top: 20px;
+            right: 20px;
             background: white;
-            border-radius: 16px;
-            padding: 20px 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
-            gap: 20px;
-            transform: translateX(500px);
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 2000;
-            border-left: 5px solid var(--success);
-            max-width: 450px;
+            gap: 15px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+            border-left: 4px solid var(--success);
+            max-width: 350px;
         }
 
         .toast.show {
@@ -703,12 +884,8 @@
             border-left-color: var(--warning);
         }
 
-        .toast.info {
-            border-left-color: var(--secondary);
-        }
-
         .toast-icon {
-            font-size: 32px;
+            font-size: 24px;
         }
 
         .toast-content {
@@ -718,55 +895,38 @@
         .toast-title {
             font-weight: 700;
             margin-bottom: 5px;
-            font-size: 18px;
         }
 
         .toast-message {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
         }
 
         .toast-close {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             color: #999;
-            transition: color 0.3s;
-            padding: 5px;
         }
 
-        .toast-close:hover {
-            color: var(--danger);
-        }
-
-        /* Paginación mejorada */
+        /* Paginación */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            margin: 30px 0 20px;
+            gap: 8px;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
 
         .pagination-btn {
-            padding: 12px 20px;
-            border: 2px solid var(--light);
+            padding: 8px 12px;
+            border: 1px solid var(--light);
             background: white;
-            border-radius: 10px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s;
-            min-width: 50px;
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background: var(--secondary);
-            color: white;
-            border-color: var(--secondary);
-            transform: translateY(-2px);
+            min-width: 35px;
         }
 
         .pagination-btn.active {
@@ -776,57 +936,14 @@
         }
 
         .pagination-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Gráficos y estadísticas */
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .quick-stat-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #dee2e6;
-        }
-
-        .quick-stat-card h4 {
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .quick-stat-card .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        /* Responsive mejorado */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .header-title {
-                flex-direction: column;
-            }
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 10px;
             }
             
             .container {
@@ -839,18 +956,9 @@
             
             .stat-card {
                 min-width: calc(50% - 10px);
-                padding: 15px;
             }
             
-            .stat-card span {
-                font-size: 28px;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filters-grid {
+            .examenes-categoria {
                 grid-template-columns: 1fr;
             }
             
@@ -862,34 +970,17 @@
                 padding: 20px;
             }
             
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .btn-icon {
-                width: 100%;
-                height: auto;
-                padding: 12px;
-            }
-            
             .toast {
-                left: 15px;
-                right: 15px;
+                left: 10px;
+                right: 10px;
                 max-width: none;
             }
             
-            .table-header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .filter-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .btn-filter {
-                width: 100%;
+            .install-pwa {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
                 justify-content: center;
             }
         }
@@ -903,17 +994,9 @@
                 width: 100%;
             }
             
-            .modal-footer {
-                flex-direction: column;
-            }
-            
-            .modal-footer .btn {
+            .examen-tab {
                 width: 100%;
-            }
-            
-            .excel-header {
-                flex-direction: column;
-                text-align: center;
+                justify-content: center;
             }
         }
 
@@ -932,12 +1015,13 @@
                 background: rgba(30, 30, 40, 0.95);
             }
             
-            .form-section, .filters-section, .table-container {
+            .form-section, .filters-section, .table-container, .examenes-section {
                 background: #2d2d3a;
             }
             
             .form-group input, .form-group select, .form-group textarea,
-            .filter-group input, .filter-group select {
+            .filter-group input, .filter-group select,
+            .examen-item {
                 background: #3d3d4a;
                 border-color: #4d4d5a;
                 color: white;
@@ -948,28 +1032,21 @@
                 border-bottom-color: #3d3d4a;
             }
             
-            .quick-stat-card {
-                background: linear-gradient(135deg, #2d2d3a, #3d3d4a);
-                color: white;
+            .examen-item {
+                background: #3d3d4a;
             }
         }
     </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>MediData Pro - App Médica</title>
-    
-    <!-- ==================== CONFIGURACIÓN PWA ==================== -->
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="MediData Pro">
-    <meta name="application-name" content="MediData Pro">
-    <meta name="mobile-web-app-capable" content="yes">
-    
 </head>
 <body>
+    <!-- Botón de instalación PWA -->
+    <button class="install-pwa" id="installButton">
+        <i class="fas fa-download"></i>
+        Instalar App Médica
+    </button>
+
     <div class="container">
-        <!-- Header con estadísticas mejorado -->
+        <!-- Header -->
         <div class="header">
             <div class="header-title">
                 <i class="fas fa-hospital-user"></i>
@@ -995,7 +1072,7 @@
             </div>
         </div>
 
-        <!-- Formulario de registro ultra mejorado -->
+        <!-- Formulario de registro -->
         <div class="form-section">
             <div class="form-title">
                 <i class="fas fa-user-plus"></i>
@@ -1004,19 +1081,19 @@
             <form id="pacienteForm" onsubmit="event.preventDefault(); agregarPaciente();">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> Nombre Completo *</label>
-                        <input type="text" id="nombre" placeholder="Ej: Dr. Juan Pérez González" required>
+                        <label><i class="fas fa-user"></i> Nombre *</label>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required>
                         <div class="error-message" id="errorNombre"></div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-calendar-alt"></i> Edad *</label>
-                        <input type="number" id="edad" placeholder="Edad en años" min="0" max="120" required>
+                        <label><i class="fas fa-calendar"></i> Edad *</label>
+                        <input type="number" id="edad" placeholder="Edad" min="0" max="120" required>
                         <div class="error-message" id="errorEdad"></div>
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-venus-mars"></i> Sexo *</label>
                         <select id="sexo" required>
-                            <option value="">Seleccionar sexo...</option>
+                            <option value="">Seleccionar...</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="Otro">Otro</option>
@@ -1030,22 +1107,14 @@
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-notes-medical"></i> Observaciones</label>
-                        <textarea id="observaciones" placeholder="Notas médicas, tratamientos, alergias..."></textarea>
+                        <textarea id="observaciones" placeholder="Notas médicas..."></textarea>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-phone-alt"></i> Teléfono</label>
-                        <input type="tel" id="telefono" placeholder="Ej: +34 600 123 456">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="email" placeholder="paciente@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-map-marker-alt"></i> Dirección</label>
-                        <input type="text" id="direccion" placeholder="Dirección completa">
+                        <label><i class="fas fa-phone"></i> Teléfono</label>
+                        <input type="tel" id="telefono" placeholder="Teléfono de contacto">
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button type="submit" class="btn">
                         <i class="fas fa-save"></i> Guardar Paciente
                     </button>
@@ -1056,91 +1125,471 @@
             </form>
         </div>
 
-        <!-- Sección de Excel mejorada -->
+        <!-- ==================== SECCIÓN DE EXÁMENES MÉDICOS ==================== -->
+        <div class="examenes-section">
+            <div class="form-title">
+                <i class="fas fa-flask"></i>
+                <h2>Exámenes Médicos</h2>
+            </div>
+
+            <!-- Tabs de categorías -->
+            <div class="examenes-tabs">
+                <button class="examen-tab active" onclick="cambiarCategoriaExamen('hematologia', this)">
+                    <i class="fas fa-tint"></i> Hematología
+                </button>
+                <button class="examen-tab" onclick="cambiarCategoriaExamen('quimica', this)">
+                    <i class="fas fa-flask"></i> Química Sanguínea
+                </button>
+                <button class="examen-tab" onclick="cambiarCategoriaExamen('hierro', this)">
+                    <i class="fas fa-pills"></i> Hierro y Vitaminas
+                </button>
+                <button class="examen-tab" onclick="cambiarCategoriaExamen('hepatica', this)">
+                    <i class="fas fa-liver"></i> Función Hepática
+                </button>
+                <button class="examen-tab" onclick="cambiarCategoriaExamen('especiales', this)">
+                    <i class="fas fa-microscope"></i> Especializadas
+                </button>
+                <button class="examen-tab" onclick="cambiarCategoriaExamen('otros', this)">
+                    <i class="fas fa-x-ray"></i> Otros Estudios
+                </button>
+            </div>
+
+            <!-- Categoría: Hematología y Coagulación -->
+            <div id="hematologia" class="examenes-categoria active">
+                <!-- Hematología -->
+                <div class="examen-item" data-nombre="Hemoglobina" data-categoria="Hematología" data-unidad="g/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Hemoglobina</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_hemoglobina" placeholder="Valor">
+                        <span class="examen-unidad">g/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Leucocitos" data-categoria="Hematología" data-unidad="x10³/µL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Leucocitos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_leucocitos" placeholder="Valor">
+                        <span class="examen-unidad">x10³/µL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Neutrófilos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Neutrófilos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_neutrofilos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Linfocitos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Linfocitos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_linfocitos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Monocitos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Monocitos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_monocitos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Eosinófilos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Eosinófilos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_eosinofilos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Basófilos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Basófilos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_basofilos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Blastos" data-categoria="Hematología" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Blastos</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_blastos" placeholder="Valor">
+                        <span class="examen-unidad">%</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Plaquetas" data-categoria="Hematología" data-unidad="x10³/µL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Plaquetas</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="1" id="valor_plaquetas" placeholder="Valor">
+                        <span class="examen-unidad">x10³/µL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="VES" data-categoria="Hematología" data-unidad="mm/h">
+                    <div class="examen-header">
+                        <span class="examen-nombre">VES</span>
+                        <span class="examen-categoria-badge">Hematología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="1" id="valor_ves" placeholder="Valor">
+                        <span class="examen-unidad">mm/h</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="TPT" data-categoria="Coagulación" data-unidad="seg">
+                    <div class="examen-header">
+                        <span class="examen-nombre">TPT</span>
+                        <span class="examen-categoria-badge">Coagulación</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_tpt" placeholder="Valor">
+                        <span class="examen-unidad">seg</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="TP" data-categoria="Coagulación" data-unidad="seg">
+                    <div class="examen-header">
+                        <span class="examen-nombre">TP</span>
+                        <span class="examen-categoria-badge">Coagulación</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_tp" placeholder="Valor">
+                        <span class="examen-unidad">seg</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="DD" data-categoria="Coagulación" data-unidad="µg/mL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">DD</span>
+                        <span class="examen-categoria-badge">Coagulación</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_dd" placeholder="Valor">
+                        <span class="examen-unidad">µg/mL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Química Sanguínea y Función Renal -->
+            <div id="quimica" class="examenes-categoria">
+                <div class="examen-item" data-nombre="Creatinina" data-categoria="Función Renal" data-unidad="mg/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Creatinina</span>
+                        <span class="examen-categoria-badge">Función Renal</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.01" id="valor_creatinina" placeholder="Valor">
+                        <span class="examen-unidad">mg/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="BUN" data-categoria="Función Renal" data-unidad="mg/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">BUN</span>
+                        <span class="examen-categoria-badge">Función Renal</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_bun" placeholder="Valor">
+                        <span class="examen-unidad">mg/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Urea" data-categoria="Función Renal" data-unidad="mg/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Urea</span>
+                        <span class="examen-categoria-badge">Función Renal</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_urea" placeholder="Valor">
+                        <span class="examen-unidad">mg/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Calcio" data-categoria="Química" data-unidad="mg/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Calcio</span>
+                        <span class="examen-categoria-badge">Química</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_calcio" placeholder="Valor">
+                        <span class="examen-unidad">mg/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Albumina" data-categoria="Química" data-unidad="g/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Albumina</span>
+                        <span class="examen-categoria-badge">Química</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_albumina" placeholder="Valor">
+                        <span class="examen-unidad">g/dL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Hierro y Vitaminas -->
+            <div id="hierro" class="examenes-categoria">
+                <div class="examen-item" data-nombre="Ferritina" data-categoria="Hierro" data-unidad="ng/mL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Ferritina</span>
+                        <span class="examen-categoria-badge">Hierro</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_ferritina" placeholder="Valor">
+                        <span class="examen-unidad">ng/mL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Hierro sérico" data-categoria="Hierro" data-unidad="µg/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Hierro sérico</span>
+                        <span class="examen-categoria-badge">Hierro</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_hierro" placeholder="Valor">
+                        <span class="examen-unidad">µg/dL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Vitamina B12" data-categoria="Vitaminas" data-unidad="pg/mL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Vitamina B12</span>
+                        <span class="examen-categoria-badge">Vitaminas</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="1" id="valor_b12" placeholder="Valor">
+                        <span class="examen-unidad">pg/mL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Vitamina B9" data-categoria="Vitaminas" data-unidad="ng/mL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Vitamina B9</span>
+                        <span class="examen-categoria-badge">Vitaminas</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_b9" placeholder="Valor">
+                        <span class="examen-unidad">ng/mL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Función Hepática y Enzimas -->
+            <div id="hepatica" class="examenes-categoria">
+                <div class="examen-item" data-nombre="TGO" data-categoria="Enzimas Hepáticas" data-unidad="U/L">
+                    <div class="examen-header">
+                        <span class="examen-nombre">TGO</span>
+                        <span class="examen-categoria-badge">Enzimas Hepáticas</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="1" id="valor_tgo" placeholder="Valor">
+                        <span class="examen-unidad">U/L</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="TGP" data-categoria="Enzimas Hepáticas" data-unidad="U/L">
+                    <div class="examen-header">
+                        <span class="examen-nombre">TGP</span>
+                        <span class="examen-categoria-badge">Enzimas Hepáticas</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="1" id="valor_tgp" placeholder="Valor">
+                        <span class="examen-unidad">U/L</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Pruebas Especializadas y Marcadores -->
+            <div id="especiales" class="examenes-categoria">
+                <div class="examen-item" data-nombre="BMO" data-categoria="Especiales" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">BMO</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_bmo" placeholder="Resultado">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Eritropoyetina" data-categoria="Especiales" data-unidad="mU/mL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Eritropoyetina</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_eritropoyetina" placeholder="Valor">
+                        <span class="examen-unidad">mU/mL</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="B2 Microglobulina" data-categoria="Especiales" data-unidad="mg/L">
+                    <div class="examen-header">
+                        <span class="examen-nombre">B2 Microglobulina</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="number" step="0.1" id="valor_b2m" placeholder="Valor">
+                        <span class="examen-unidad">mg/L</span>
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Cromosoma Ph" data-categoria="Especiales" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Cromosoma Ph</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_cromosoma" placeholder="Positivo/Negativo">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Electroforesis Hb" data-categoria="Especiales" data-unidad="%">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Electroforesis Hb</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_electro_hb" placeholder="Resultado">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Electroforesis Proteínas" data-categoria="Especiales" data-unidad="g/dL">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Electroforesis Proteínas</span>
+                        <span class="examen-categoria-badge">Especiales</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_electro_prote" placeholder="Resultado">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Otros Estudios -->
+            <div id="otros" class="examenes-categoria">
+                <div class="examen-item" data-nombre="Guayaco" data-categoria="Otros" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Guayaco</span>
+                        <span class="examen-categoria-badge">Otros</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_guayaco" placeholder="Positivo/Negativo">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="EGO" data-categoria="Otros" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">EGO</span>
+                        <span class="examen-categoria-badge">Otros</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_ego" placeholder="Resultado">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="Ultrasonido" data-categoria="Imagen" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">Ultrasonido</span>
+                        <span class="examen-categoria-badge">Imagen</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_ultrasonido" placeholder="Hallazgos">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="TAC" data-categoria="Imagen" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">TAC</span>
+                        <span class="examen-categoria-badge">Imagen</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_tac" placeholder="Hallazgos">
+                    </div>
+                </div>
+                <div class="examen-item" data-nombre="EKG" data-categoria="Cardiología" data-unidad="">
+                    <div class="examen-header">
+                        <span class="examen-nombre">EKG</span>
+                        <span class="examen-categoria-badge">Cardiología</span>
+                    </div>
+                    <div class="examen-input">
+                        <input type="text" id="valor_ekg" placeholder="Resultado">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón para guardar exámenes -->
+            <button class="btn-agregar-examen" onclick="guardarExamenesPaciente()">
+                <i class="fas fa-save"></i>
+                Guardar Exámenes para el Paciente Seleccionado
+            </button>
+
+            <!-- Lista de exámenes guardados del paciente actual -->
+            <div class="examenes-guardados" id="examenesGuardados">
+                <h3>
+                    <i class="fas fa-history"></i>
+                    Exámenes del Paciente Actual
+                </h3>
+                <div class="examenes-grid" id="listaExamenesPaciente">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Excel -->
         <div class="excel-section">
             <div class="excel-header">
                 <i class="fas fa-file-excel"></i>
-                <h2>Exportación a Excel Profesional</h2>
+                <h2>Exportar a Excel</h2>
             </div>
             <div class="excel-grid">
                 <button class="btn-excel" onclick="exportarExcelCompleto()">
-                    <i class="fas fa-database"></i>
-                    Excel Completo
+                    <i class="fas fa-database"></i> Completo
                 </button>
                 <button class="btn-excel" onclick="exportarExcelFiltrado()">
-                    <i class="fas fa-filter"></i>
-                    Excel Filtrado
+                    <i class="fas fa-filter"></i> Filtrado
                 </button>
                 <button class="btn-excel" onclick="exportarExcelResumen()">
-                    <i class="fas fa-chart-pie"></i>
-                    Excel Resumen
+                    <i class="fas fa-chart-pie"></i> Resumen
                 </button>
-                <button class="btn-excel" onclick="exportarCSV()">
-                    <i class="fas fa-file-csv"></i>
-                    CSV para Excel
+                <button class="btn-excel" onclick="exportarExcelExamenes()">
+                    <i class="fas fa-flask"></i> Exámenes
                 </button>
             </div>
         </div>
 
-        <!-- Filtros avanzados -->
+        <!-- Filtros -->
         <div class="filters-section">
             <div class="filters-header">
-                <h3>
-                    <i class="fas fa-search"></i>
-                    Búsqueda y Filtros
-                </h3>
+                <h3><i class="fas fa-search"></i> Búsqueda</h3>
                 <div class="filter-actions">
                     <button class="btn-filter" onclick="limpiarFiltros()">
-                        <i class="fas fa-times"></i> Limpiar Filtros
-                    </button>
-                    <button class="btn-filter" onclick="exportarFiltrados()">
-                        <i class="fas fa-download"></i> Exportar Resultados
+                        <i class="fas fa-times"></i> Limpiar
                     </button>
                 </div>
             </div>
             <div class="filters-grid">
                 <div class="filter-group">
-                    <label><i class="fas fa-stethoscope"></i> Por Enfermedad</label>
-                    <input type="text" id="filtroEnfermedad" placeholder="Ej: Diabetes..." oninput="filtrarPacientes()">
+                    <label>Por Enfermedad</label>
+                    <input type="text" id="filtroEnfermedad" placeholder="Ej: Diabetes" oninput="filtrarPacientes()">
                 </div>
                 <div class="filter-group">
-                    <label><i class="fas fa-qrcode"></i> Por Código</label>
-                    <input type="text" id="filtroCodigo" placeholder="Ej: PAC-001..." oninput="filtrarPacientes()">
+                    <label>Por Código</label>
+                    <input type="text" id="filtroCodigo" placeholder="Ej: PAC-001" oninput="filtrarPacientes()">
                 </div>
                 <div class="filter-group">
-                    <label><i class="fas fa-user"></i> Por Nombre</label>
-                    <input type="text" id="filtroNombre" placeholder="Nombre del paciente..." oninput="filtrarPacientes()">
+                    <label>Por Nombre</label>
+                    <input type="text" id="filtroNombre" placeholder="Nombre" oninput="filtrarPacientes()">
                 </div>
                 <div class="filter-group">
-                    <label><i class="fas fa-venus-mars"></i> Por Sexo</label>
+                    <label>Por Sexo</label>
                     <select id="filtroSexo" onchange="filtrarPacientes()">
-                        <option value="">Todos los sexos</option>
+                        <option value="">Todos</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                         <option value="Otro">Otro</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label><i class="fas fa-sort-amount-down"></i> Ordenar por</label>
-                    <select id="ordenarPor" onchange="filtrarPacientes()">
-                        <option value="nombre">Nombre (A-Z)</option>
-                        <option value="nombreDesc">Nombre (Z-A)</option>
-                        <option value="edadAsc">Edad (menor a mayor)</option>
-                        <option value="edadDesc">Edad (mayor a menor)</option>
-                        <option value="fechaAsc">Más antiguos</option>
-                        <option value="fechaDesc">Más recientes</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label><i class="fas fa-calendar"></i> Rango de Edad</label>
-                    <select id="filtroRangoEdad" onchange="filtrarPacientes()">
-                        <option value="">Todas las edades</option>
-                        <option value="0-18">0-18 años</option>
-                        <option value="19-30">19-30 años</option>
-                        <option value="31-45">31-45 años</option>
-                        <option value="46-60">46-60 años</option>
-                        <option value="61-75">61-75 años</option>
-                        <option value="75+">Más de 75 años</option>
                     </select>
                 </div>
             </div>
@@ -1149,18 +1598,10 @@
         <!-- Tabla de pacientes -->
         <div class="table-container">
             <div class="table-header">
-                <h3>
-                    <i class="fas fa-users"></i>
-                    Lista de Pacientes
-                </h3>
-                <div class="table-controls">
-                    <button class="btn-filter" onclick="actualizarEstadisticasRapidas()">
-                        <i class="fas fa-sync-alt"></i> Actualizar
-                    </button>
-                </div>
+                <h3><i class="fas fa-users"></i> Pacientes</h3>
             </div>
             <div class="table-wrapper">
-                <table id="tablaPacientes">
+                <table>
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -1170,12 +1611,12 @@
                             <th>Enfermedad</th>
                             <th>Observaciones</th>
                             <th>Teléfono</th>
-                            <th>Email</th>
+                            <th>Exámenes</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
-                        <!-- Los datos se insertan dinámicamente -->
+                        <!-- Datos dinámicos -->
                     </tbody>
                 </table>
             </div>
@@ -1191,59 +1632,114 @@
                 </button>
             </div>
         </div>
-
-        <!-- Estadísticas rápidas -->
-        <div class="quick-stats" id="quickStats">
-            <!-- Se llena dinámicamente -->
-        </div>
     </div>
 
-    <!-- Modal para detalles/edición -->
+    <!-- Modal de detalles -->
     <div class="modal" id="modalPaciente">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitulo"><i class="fas fa-user-md"></i> Detalles del Paciente</h2>
+                <h2 id="modalTitulo">Detalles del Paciente</h2>
                 <button class="modal-close" onclick="cerrarModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Contenido dinámico -->
-            </div>
+            <div class="modal-body" id="modalBody"></div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
-                <button class="btn" id="modalGuardar" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn" id="modalGuardar" onclick="guardarEdicion()">Guardar</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast de notificaciones -->
+    <!-- Toast -->
     <div class="toast" id="toast">
-        <div class="toast-icon" id="toastIcon">
-            <i class="fas fa-check-circle"></i>
-        </div>
+        <div class="toast-icon" id="toastIcon"><i class="fas fa-check-circle"></i></div>
         <div class="toast-content">
             <div class="toast-title" id="toastTitle">Éxito</div>
-            <div class="toast-message" id="toastMessage">Operación completada</div>
+            <div class="toast-message" id="toastMessage"></div>
         </div>
         <button class="toast-close" onclick="cerrarToast()">&times;</button>
     </div>
 
     <script>
+        // ==================== CONFIGURACIÓN PWA ====================
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.classList.add('show');
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                installButton.classList.remove('show');
+            }
+            deferredPrompt = null;
+        });
+
         // ==================== CONFIGURACIÓN ====================
         const ITEMS_POR_PAGINA = 10;
         let paginaActual = 1;
         let pacientes = [];
         let pacientesFiltrados = [];
         let pacienteEditando = null;
+        let pacienteSeleccionado = null;
+
+        // Lista completa de exámenes para referencia
+        const examenesLista = [
+            // Hematología
+            { id: 'hemoglobina', nombre: 'Hemoglobina', categoria: 'Hematología', unidad: 'g/dL' },
+            { id: 'leucocitos', nombre: 'Leucocitos', categoria: 'Hematología', unidad: 'x10³/µL' },
+            { id: 'neutrofilos', nombre: 'Neutrófilos', categoria: 'Hematología', unidad: '%' },
+            { id: 'linfocitos', nombre: 'Linfocitos', categoria: 'Hematología', unidad: '%' },
+            { id: 'monocitos', nombre: 'Monocitos', categoria: 'Hematología', unidad: '%' },
+            { id: 'eosinofilos', nombre: 'Eosinófilos', categoria: 'Hematología', unidad: '%' },
+            { id: 'basofilos', nombre: 'Basófilos', categoria: 'Hematología', unidad: '%' },
+            { id: 'blastos', nombre: 'Blastos', categoria: 'Hematología', unidad: '%' },
+            { id: 'plaquetas', nombre: 'Plaquetas', categoria: 'Hematología', unidad: 'x10³/µL' },
+            { id: 'ves', nombre: 'VES', categoria: 'Hematología', unidad: 'mm/h' },
+            { id: 'tpt', nombre: 'TPT', categoria: 'Coagulación', unidad: 'seg' },
+            { id: 'tp', nombre: 'TP', categoria: 'Coagulación', unidad: 'seg' },
+            { id: 'dd', nombre: 'DD', categoria: 'Coagulación', unidad: 'µg/mL' },
+            // Química
+            { id: 'creatinina', nombre: 'Creatinina', categoria: 'Función Renal', unidad: 'mg/dL' },
+            { id: 'bun', nombre: 'BUN', categoria: 'Función Renal', unidad: 'mg/dL' },
+            { id: 'urea', nombre: 'Urea', categoria: 'Función Renal', unidad: 'mg/dL' },
+            { id: 'calcio', nombre: 'Calcio', categoria: 'Química', unidad: 'mg/dL' },
+            { id: 'albumina', nombre: 'Albumina', categoria: 'Química', unidad: 'g/dL' },
+            // Hierro y Vitaminas
+            { id: 'ferritina', nombre: 'Ferritina', categoria: 'Hierro', unidad: 'ng/mL' },
+            { id: 'hierro', nombre: 'Hierro sérico', categoria: 'Hierro', unidad: 'µg/dL' },
+            { id: 'b12', nombre: 'Vitamina B12', categoria: 'Vitaminas', unidad: 'pg/mL' },
+            { id: 'b9', nombre: 'Vitamina B9', categoria: 'Vitaminas', unidad: 'ng/mL' },
+            // Hepática
+            { id: 'tgo', nombre: 'TGO', categoria: 'Enzimas Hepáticas', unidad: 'U/L' },
+            { id: 'tgp', nombre: 'TGP', categoria: 'Enzimas Hepáticas', unidad: 'U/L' },
+            // Especiales
+            { id: 'bmo', nombre: 'BMO', categoria: 'Especiales', unidad: '' },
+            { id: 'eritropoyetina', nombre: 'Eritropoyetina', categoria: 'Especiales', unidad: 'mU/mL' },
+            { id: 'b2m', nombre: 'B2 Microglobulina', categoria: 'Especiales', unidad: 'mg/L' },
+            { id: 'cromosoma', nombre: 'Cromosoma Ph', categoria: 'Especiales', unidad: '' },
+            { id: 'electro_hb', nombre: 'Electroforesis Hb', categoria: 'Especiales', unidad: '%' },
+            { id: 'electro_prote', nombre: 'Electroforesis Proteínas', categoria: 'Especiales', unidad: 'g/dL' },
+            // Otros
+            { id: 'guayaco', nombre: 'Guayaco', categoria: 'Otros', unidad: '' },
+            { id: 'ego', nombre: 'EGO', categoria: 'Otros', unidad: '' },
+            { id: 'ultrasonido', nombre: 'Ultrasonido', categoria: 'Imagen', unidad: '' },
+            { id: 'tac', nombre: 'TAC', categoria: 'Imagen', unidad: '' },
+            { id: 'ekg', nombre: 'EKG', categoria: 'Cardiología', unidad: '' }
+        ];
 
         // ==================== INICIALIZACIÓN ====================
         document.addEventListener('DOMContentLoaded', () => {
             cargarPacientes();
-            actualizarEstadisticasRapidas();
         });
 
-        // ==================== FUNCIONES DE DATOS ====================
         function cargarPacientes() {
-            const stored = localStorage.getItem('medidata_pro_pacientes');
+            const stored = localStorage.getItem('medidata_pro_pacientes_v2');
             pacientes = stored ? JSON.parse(stored) : [];
             pacientesFiltrados = [...pacientes];
             actualizarEstadisticas();
@@ -1251,10 +1747,9 @@
         }
 
         function guardarPacientes() {
-            localStorage.setItem('medidata_pro_pacientes', JSON.stringify(pacientes));
+            localStorage.setItem('medidata_pro_pacientes_v2', JSON.stringify(pacientes));
             pacientesFiltrados = [...pacientes];
             actualizarEstadisticas();
-            actualizarEstadisticasRapidas();
             mostrarPacientes();
         }
 
@@ -1274,38 +1769,6 @@
             document.getElementById('edadPromedio').textContent = edadPromedio;
         }
 
-        function actualizarEstadisticasRapidas() {
-            const quickStats = document.getElementById('quickStats');
-            
-            const enfermedadesUnicas = new Set(pacientes.map(p => p.enfermedad)).size;
-            const pacientesConTelefono = pacientes.filter(p => p.telefono && p.telefono !== '').length;
-            const edadMax = pacientes.length > 0 ? Math.max(...pacientes.map(p => p.edad)) : 0;
-            const edadMin = pacientes.length > 0 ? Math.min(...pacientes.map(p => p.edad)) : 0;
-            
-            quickStats.innerHTML = `
-                <div class="quick-stat-card">
-                    <h4><i class="fas fa-disease"></i> Enfermedades</h4>
-                    <div class="value">${enfermedadesUnicas}</div>
-                    <small>diagnósticos distintos</small>
-                </div>
-                <div class="quick-stat-card">
-                    <h4><i class="fas fa-phone"></i> Contacto</h4>
-                    <div class="value">${pacientesConTelefono}</div>
-                    <small>con teléfono</small>
-                </div>
-                <div class="quick-stat-card">
-                    <h4><i class="fas fa-arrow-up"></i> Edad Máx</h4>
-                    <div class="value">${edadMax}</div>
-                    <small>años</small>
-                </div>
-                <div class="quick-stat-card">
-                    <h4><i class="fas fa-arrow-down"></i> Edad Mín</h4>
-                    <div class="value">${edadMin}</div>
-                    <small>años</small>
-                </div>
-            `;
-        }
-
         // ==================== GENERAR CÓDIGO ====================
         function generarCodigoUnico() {
             const prefijo = "PAC";
@@ -1318,93 +1781,37 @@
             return `${prefijo}-${anio}${mes}${dia}-${numero}-${random}`;
         }
 
-        // ==================== VALIDACIÓN ====================
-        function validarFormulario() {
-            let valido = true;
-            
-            // Nombre
-            const nombre = document.getElementById('nombre').value.trim();
-            if (!nombre) {
-                mostrarError('nombre', 'El nombre es obligatorio');
-                valido = false;
-            } else if (nombre.length < 3) {
-                mostrarError('nombre', 'Mínimo 3 caracteres');
-                valido = false;
-            } else {
-                limpiarError('nombre');
-            }
-            
-            // Edad
-            const edad = document.getElementById('edad').value;
-            if (!edad) {
-                mostrarError('edad', 'La edad es obligatoria');
-                valido = false;
-            } else if (edad < 0 || edad > 120) {
-                mostrarError('edad', 'Edad no válida (0-120)');
-                valido = false;
-            } else {
-                limpiarError('edad');
-            }
-            
-            // Sexo
-            const sexo = document.getElementById('sexo').value;
-            if (!sexo) {
-                mostrarError('sexo', 'Seleccione un sexo');
-                valido = false;
-            } else {
-                limpiarError('sexo');
-            }
-            
-            // Enfermedad
-            const enfermedad = document.getElementById('enfermedad').value.trim();
-            if (!enfermedad) {
-                mostrarError('enfermedad', 'El diagnóstico es obligatorio');
-                valido = false;
-            } else {
-                limpiarError('enfermedad');
-            }
-            
-            return valido;
-        }
-
-        function mostrarError(campo, mensaje) {
-            document.getElementById(`error${campo.charAt(0).toUpperCase() + campo.slice(1)}`).textContent = mensaje;
-            document.getElementById(campo).classList.add('error');
-        }
-
-        function limpiarError(campo) {
-            document.getElementById(`error${campo.charAt(0).toUpperCase() + campo.slice(1)}`).textContent = '';
-            document.getElementById(campo).classList.remove('error');
-        }
-
-        // ==================== CRUD ====================
+        // ==================== CRUD PACIENTES ====================
         function agregarPaciente() {
-            if (!validarFormulario()) {
-                mostrarToast('error', 'Error de validación', 'Corrija los errores del formulario');
+            const nombre = document.getElementById('nombre').value.trim();
+            const edad = document.getElementById('edad').value;
+            const sexo = document.getElementById('sexo').value;
+            const enfermedad = document.getElementById('enfermedad').value.trim();
+            const observaciones = document.getElementById('observaciones').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+
+            if (!nombre || !edad || !sexo || !enfermedad) {
+                mostrarToast('error', 'Error', 'Complete los campos obligatorios');
                 return;
             }
-            
+
             const nuevoPaciente = {
                 codigo: generarCodigoUnico(),
-                nombre: document.getElementById('nombre').value.trim(),
-                edad: parseInt(document.getElementById('edad').value),
-                sexo: document.getElementById('sexo').value,
-                enfermedad: document.getElementById('enfermedad').value.trim(),
-                observaciones: document.getElementById('observaciones').value.trim() || 'Sin observaciones',
-                telefono: document.getElementById('telefono').value.trim() || 'No especificado',
-                email: document.getElementById('email').value.trim() || 'No especificado',
-                direccion: document.getElementById('direccion').value.trim() || 'No especificada',
+                nombre: nombre,
+                edad: parseInt(edad),
+                sexo: sexo,
+                enfermedad: enfermedad,
+                observaciones: observaciones || 'Sin observaciones',
+                telefono: telefono || 'No especificado',
+                examenes: [],
                 fechaRegistro: new Date().toISOString(),
-                ultimaActualizacion: new Date().toISOString(),
-                historial: []
+                ultimaActualizacion: new Date().toISOString()
             };
-            
+
             pacientes.unshift(nuevoPaciente);
             guardarPacientes();
             limpiarFormulario();
-            
             mostrarToast('success', 'Paciente registrado', `Código: ${nuevoPaciente.codigo}`);
-            actualizarEstadisticasRapidas();
         }
 
         function limpiarFormulario() {
@@ -1414,11 +1821,99 @@
             document.getElementById('enfermedad').value = '';
             document.getElementById('observaciones').value = '';
             document.getElementById('telefono').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('direccion').value = '';
+        }
+
+        function seleccionarPaciente(codigo) {
+            pacienteSeleccionado = pacientes.find(p => p.codigo === codigo);
+            if (pacienteSeleccionado) {
+                mostrarExamenesPaciente();
+                mostrarToast('info', 'Paciente seleccionado', pacienteSeleccionado.nombre);
+            }
+        }
+
+        // ==================== EXÁMENES MÉDICOS ====================
+        function cambiarCategoriaExamen(categoria, element) {
+            document.querySelectorAll('.examen-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.examenes-categoria').forEach(cat => cat.classList.remove('active'));
             
-            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            element.classList.add('active');
+            document.getElementById(categoria).classList.add('active');
+        }
+
+        function guardarExamenesPaciente() {
+            if (!pacienteSeleccionado) {
+                mostrarToast('warning', 'Atención', 'Seleccione un paciente primero');
+                return;
+            }
+
+            const examenesGuardados = [];
+
+            examenesLista.forEach(examen => {
+                const input = document.getElementById(`valor_${examen.id}`);
+                if (input && input.value) {
+                    examenesGuardados.push({
+                        id: examen.id,
+                        nombre: examen.nombre,
+                        categoria: examen.categoria,
+                        valor: input.value,
+                        unidad: examen.unidad,
+                        fecha: new Date().toLocaleString()
+                    });
+                    input.value = ''; // Limpiar después de guardar
+                }
+            });
+
+            if (examenesGuardados.length === 0) {
+                mostrarToast('warning', 'Atención', 'No hay valores de exámenes para guardar');
+                return;
+            }
+
+            if (!pacienteSeleccionado.examenes) {
+                pacienteSeleccionado.examenes = [];
+            }
+
+            pacienteSeleccionado.examenes.push(...examenesGuardados);
+            pacienteSeleccionado.ultimaActualizacion = new Date().toISOString();
+            
+            guardarPacientes();
+            mostrarExamenesPaciente();
+            mostrarToast('success', 'Exámenes guardados', `${examenesGuardados.length} exámenes agregados`);
+        }
+
+        function mostrarExamenesPaciente() {
+            const contenedor = document.getElementById('listaExamenesPaciente');
+            
+            if (!pacienteSeleccionado || !pacienteSeleccionado.examenes || pacienteSeleccionado.examenes.length === 0) {
+                contenedor.innerHTML = '<p style="text-align: center; color: #666;">No hay exámenes guardados</p>';
+                return;
+            }
+
+            contenedor.innerHTML = pacienteSeleccionado.examenes.map((examen, index) => `
+                <div class="examen-guardado-card">
+                    <button class="btn-eliminar-examen" onclick="eliminarExamen(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="examen-guardado-header">
+                        <span class="examen-guardado-nombre">${examen.nombre}</span>
+                        <span class="examen-guardado-categoria">${examen.categoria}</span>
+                    </div>
+                    <div class="examen-guardado-valor">
+                        ${examen.valor} <span class="examen-guardado-unidad">${examen.unidad}</span>
+                    </div>
+                    <div class="examen-guardado-fecha">
+                        <i class="far fa-calendar-alt"></i> ${examen.fecha}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function eliminarExamen(index) {
+            if (pacienteSeleccionado && pacienteSeleccionado.examenes) {
+                pacienteSeleccionado.examenes.splice(index, 1);
+                guardarPacientes();
+                mostrarExamenesPaciente();
+                mostrarToast('success', 'Examen eliminado', 'El examen fue eliminado');
+            }
         }
 
         // ==================== FILTROS ====================
@@ -1427,51 +1922,15 @@
             const filtroCodigo = document.getElementById('filtroCodigo').value.toLowerCase();
             const filtroNombre = document.getElementById('filtroNombre').value.toLowerCase();
             const filtroSexo = document.getElementById('filtroSexo').value;
-            const filtroRangoEdad = document.getElementById('filtroRangoEdad').value;
-            const ordenarPor = document.getElementById('ordenarPor').value;
             
             pacientesFiltrados = pacientes.filter(paciente => {
-                // Filtros básicos
                 const coincideEnfermedad = !filtroEnfermedad || paciente.enfermedad.toLowerCase().includes(filtroEnfermedad);
                 const coincideCodigo = !filtroCodigo || paciente.codigo.toLowerCase().includes(filtroCodigo);
                 const coincideNombre = !filtroNombre || paciente.nombre.toLowerCase().includes(filtroNombre);
                 const coincideSexo = !filtroSexo || paciente.sexo === filtroSexo;
                 
-                // Filtro por rango de edad
-                let coincideEdad = true;
-                if (filtroRangoEdad) {
-                    const [min, max] = filtroRangoEdad.split('-').map(Number);
-                    if (filtroRangoEdad === '75+') {
-                        coincideEdad = paciente.edad >= 75;
-                    } else {
-                        coincideEdad = paciente.edad >= min && paciente.edad <= max;
-                    }
-                }
-                
-                return coincideEnfermedad && coincideCodigo && coincideNombre && coincideSexo && coincideEdad;
+                return coincideEnfermedad && coincideCodigo && coincideNombre && coincideSexo;
             });
-            
-            // Ordenamiento
-            switch(ordenarPor) {
-                case 'nombre':
-                    pacientesFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-                    break;
-                case 'nombreDesc':
-                    pacientesFiltrados.sort((a, b) => b.nombre.localeCompare(a.nombre));
-                    break;
-                case 'edadAsc':
-                    pacientesFiltrados.sort((a, b) => a.edad - b.edad);
-                    break;
-                case 'edadDesc':
-                    pacientesFiltrados.sort((a, b) => b.edad - a.edad);
-                    break;
-                case 'fechaAsc':
-                    pacientesFiltrados.sort((a, b) => new Date(a.fechaRegistro) - new Date(b.fechaRegistro));
-                    break;
-                case 'fechaDesc':
-                    pacientesFiltrados.sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro));
-                    break;
-            }
             
             paginaActual = 1;
             mostrarPacientes();
@@ -1482,8 +1941,6 @@
             document.getElementById('filtroCodigo').value = '';
             document.getElementById('filtroNombre').value = '';
             document.getElementById('filtroSexo').value = '';
-            document.getElementById('filtroRangoEdad').value = '';
-            document.getElementById('ordenarPor').value = 'nombre';
             filtrarPacientes();
         }
 
@@ -1497,10 +1954,9 @@
             if (pacientesFiltrados.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="9" style="text-align: center; padding: 50px;">
-                            <i class="fas fa-search" style="font-size: 48px; opacity: 0.3; margin-bottom: 15px;"></i>
-                            <br>
-                            <span style="font-size: 18px; color: #666;">No se encontraron pacientes</span>
+                        <td colspan="9" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-search" style="font-size: 40px; opacity: 0.3;"></i>
+                            <br>No se encontraron pacientes
                         </td>
                     </tr>
                 `;
@@ -1512,23 +1968,32 @@
                         'Otro': 'sexo-otro'
                     }[paciente.sexo] || '';
                     
+                    const numExamenes = paciente.examenes ? paciente.examenes.length : 0;
+                    
                     return `
                         <tr>
-                            <td><span class="code-display" title="${paciente.codigo}">${paciente.codigo}</span></td>
+                            <td><span class="code-display">${paciente.codigo}</span></td>
                             <td><strong>${paciente.nombre}</strong></td>
                             <td>${paciente.edad} años</td>
                             <td><span class="sexo-badge ${sexoClass}">${paciente.sexo}</span></td>
                             <td>${paciente.enfermedad}</td>
-                            <td class="observaciones-cell" title="${paciente.observaciones}">${paciente.observaciones}</td>
+                            <td>${paciente.observaciones}</td>
                             <td>${paciente.telefono}</td>
-                            <td>${paciente.email}</td>
+                            <td>
+                                <span class="sexo-badge" style="background: var(--gradient-lab); color: white;">
+                                    ${numExamenes} exámenes
+                                </span>
+                            </td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn-icon btn-view" onclick="verPaciente('${paciente.codigo}')" title="Ver detalles">
+                                    <button class="btn-icon btn-view" onclick="verPaciente('${paciente.codigo}')" title="Ver">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <button class="btn-icon btn-edit" onclick="editarPaciente('${paciente.codigo}')" title="Editar">
                                         <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon btn-lab" onclick="seleccionarPaciente('${paciente.codigo}')" title="Agregar Exámenes">
+                                        <i class="fas fa-flask"></i>
                                     </button>
                                     <button class="btn-icon btn-delete" onclick="eliminarPaciente('${paciente.codigo}')" title="Eliminar">
                                         <i class="fas fa-trash"></i>
@@ -1556,7 +2021,7 @@
                 if (i === 1 || i === totalPaginas || (i >= paginaActual - 2 && i <= paginaActual + 2)) {
                     html += `<button class="pagination-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
                 } else if (i === paginaActual - 3 || i === paginaActual + 3) {
-                    html += `<span class="pagination-btn" style="border: none; background: none;">...</span>`;
+                    html += `<span class="pagination-btn" style="border: none;">...</span>`;
                 }
             }
             
@@ -1582,28 +2047,23 @@
             const paciente = pacientes.find(p => p.codigo === codigo);
             if (!paciente) return;
             
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <div style="display: grid; gap: 15px;">
-                    <div style="background: var(--light); padding: 15px; border-radius: 10px;">
-                        <p><strong><i class="fas fa-qrcode"></i> Código:</strong> ${paciente.codigo}</p>
-                    </div>
-                    <p><strong><i class="fas fa-user"></i> Nombre:</strong> ${paciente.nombre}</p>
-                    <p><strong><i class="fas fa-calendar"></i> Edad:</strong> ${paciente.edad} años</p>
-                    <p><strong><i class="fas fa-venus-mars"></i> Sexo:</strong> ${paciente.sexo}</p>
-                    <p><strong><i class="fas fa-stethoscope"></i> Diagnóstico:</strong> ${paciente.enfermedad}</p>
-                    <p><strong><i class="fas fa-notes-medical"></i> Observaciones:</strong> ${paciente.observaciones}</p>
-                    <p><strong><i class="fas fa-phone"></i> Teléfono:</strong> ${paciente.telefono}</p>
-                    <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${paciente.email}</p>
-                    <p><strong><i class="fas fa-map-marker"></i> Dirección:</strong> ${paciente.direccion}</p>
-                    <div style="background: var(--light); padding: 15px; border-radius: 10px; margin-top: 10px;">
-                        <p><strong><i class="fas fa-calendar-plus"></i> Registro:</strong> ${new Date(paciente.fechaRegistro).toLocaleString()}</p>
-                        <p><strong><i class="fas fa-calendar-check"></i> Actualización:</strong> ${new Date(paciente.ultimaActualizacion).toLocaleString()}</p>
-                    </div>
+            const numExamenes = paciente.examenes ? paciente.examenes.length : 0;
+            
+            document.getElementById('modalBody').innerHTML = `
+                <div style="display: grid; gap: 10px;">
+                    <p><strong>Código:</strong> ${paciente.codigo}</p>
+                    <p><strong>Nombre:</strong> ${paciente.nombre}</p>
+                    <p><strong>Edad:</strong> ${paciente.edad} años</p>
+                    <p><strong>Sexo:</strong> ${paciente.sexo}</p>
+                    <p><strong>Diagnóstico:</strong> ${paciente.enfermedad}</p>
+                    <p><strong>Observaciones:</strong> ${paciente.observaciones}</p>
+                    <p><strong>Teléfono:</strong> ${paciente.telefono}</p>
+                    <p><strong>Exámenes:</strong> ${numExamenes} registros</p>
+                    <p><strong>Registro:</strong> ${new Date(paciente.fechaRegistro).toLocaleString()}</p>
                 </div>
             `;
             
-            document.getElementById('modalTitulo').innerHTML = '<i class="fas fa-user-md"></i> Detalles del Paciente';
+            document.getElementById('modalTitulo').textContent = 'Detalles del Paciente';
             document.getElementById('modalGuardar').style.display = 'none';
             document.getElementById('modalPaciente').classList.add('active');
         }
@@ -1614,19 +2074,18 @@
             
             pacienteEditando = paciente;
             
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <div style="display: grid; gap: 15px;">
+            document.getElementById('modalBody').innerHTML = `
+                <div style="display: grid; gap: 10px;">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> Nombre</label>
-                        <input type="text" id="editNombre" value="${paciente.nombre.replace(/"/g, '&quot;')}">
+                        <label>Nombre</label>
+                        <input type="text" id="editNombre" value="${paciente.nombre}">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-calendar"></i> Edad</label>
+                        <label>Edad</label>
                         <input type="number" id="editEdad" value="${paciente.edad}" min="0" max="120">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-venus-mars"></i> Sexo</label>
+                        <label>Sexo</label>
                         <select id="editSexo">
                             <option value="Masculino" ${paciente.sexo === 'Masculino' ? 'selected' : ''}>Masculino</option>
                             <option value="Femenino" ${paciente.sexo === 'Femenino' ? 'selected' : ''}>Femenino</option>
@@ -1634,29 +2093,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-stethoscope"></i> Enfermedad</label>
-                        <input type="text" id="editEnfermedad" value="${paciente.enfermedad.replace(/"/g, '&quot;')}">
+                        <label>Diagnóstico</label>
+                        <input type="text" id="editEnfermedad" value="${paciente.enfermedad}">
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-notes-medical"></i> Observaciones</label>
-                        <textarea id="editObservaciones">${paciente.observaciones.replace(/"/g, '&quot;')}</textarea>
+                        <label>Observaciones</label>
+                        <textarea id="editObservaciones">${paciente.observaciones}</textarea>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-phone"></i> Teléfono</label>
-                        <input type="text" id="editTelefono" value="${paciente.telefono || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="editEmail" value="${paciente.email || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-map-marker"></i> Dirección</label>
-                        <input type="text" id="editDireccion" value="${paciente.direccion || ''}">
+                        <label>Teléfono</label>
+                        <input type="text" id="editTelefono" value="${paciente.telefono}">
                     </div>
                 </div>
             `;
             
-            document.getElementById('modalTitulo').innerHTML = '<i class="fas fa-edit"></i> Editar Paciente';
+            document.getElementById('modalTitulo').textContent = 'Editar Paciente';
             document.getElementById('modalGuardar').style.display = 'inline-flex';
             document.getElementById('modalPaciente').classList.add('active');
         }
@@ -1670,22 +2121,18 @@
             pacienteEditando.enfermedad = document.getElementById('editEnfermedad').value;
             pacienteEditando.observaciones = document.getElementById('editObservaciones').value;
             pacienteEditando.telefono = document.getElementById('editTelefono').value;
-            pacienteEditando.email = document.getElementById('editEmail').value;
-            pacienteEditando.direccion = document.getElementById('editDireccion').value;
             pacienteEditando.ultimaActualizacion = new Date().toISOString();
             
             guardarPacientes();
             cerrarModal();
-            mostrarToast('success', 'Paciente actualizado', 'Los cambios han sido guardados');
-            actualizarEstadisticasRapidas();
+            mostrarToast('success', 'Paciente actualizado', 'Los cambios fueron guardados');
         }
 
         function eliminarPaciente(codigo) {
-            if (confirm('¿Está seguro de eliminar este paciente? Esta acción no se puede deshacer.')) {
+            if (confirm('¿Eliminar este paciente? Esta acción no se puede deshacer.')) {
                 pacientes = pacientes.filter(p => p.codigo !== codigo);
                 guardarPacientes();
-                mostrarToast('warning', 'Paciente eliminado', 'El registro ha sido eliminado');
-                actualizarEstadisticasRapidas();
+                mostrarToast('warning', 'Paciente eliminado', 'El registro fue eliminado');
             }
         }
 
@@ -1697,292 +2144,122 @@
         // ==================== TOAST ====================
         function mostrarToast(tipo, titulo, mensaje) {
             const toast = document.getElementById('toast');
-            const icon = document.getElementById('toastIcon');
-            const title = document.getElementById('toastTitle');
-            const message = document.getElementById('toastMessage');
+            document.getElementById('toastTitle').textContent = titulo;
+            document.getElementById('toastMessage').textContent = mensaje;
             
             toast.className = 'toast ' + tipo;
-            icon.innerHTML = {
-                'success': '<i class="fas fa-check-circle" style="color: #27ae60;"></i>',
-                'error': '<i class="fas fa-times-circle" style="color: #e74c3c;"></i>',
-                'warning': '<i class="fas fa-exclamation-triangle" style="color: #f39c12;"></i>',
-                'info': '<i class="fas fa-info-circle" style="color: #3498db;"></i>'
-            }[tipo];
-            
-            title.textContent = titulo;
-            message.textContent = mensaje;
-            
             toast.classList.add('show');
             
-            setTimeout(cerrarToast, 5000);
+            setTimeout(cerrarToast, 3000);
         }
 
         function cerrarToast() {
             document.getElementById('toast').classList.remove('show');
         }
 
-        // ==================== FUNCIONES DE EXCEL MEJORADAS ====================
+        // ==================== EXPORTACIÓN EXCEL ====================
         function exportarExcelCompleto() {
             if (pacientes.length === 0) {
                 mostrarToast('warning', 'Sin datos', 'No hay pacientes para exportar');
                 return;
             }
 
-            try {
-                const wb = XLSX.utils.book_new();
-                
-                // Hoja principal con todos los pacientes
-                const datosPrincipales = pacientes.map(p => ({
-                    'Código': p.codigo,
-                    'Nombre': p.nombre,
-                    'Edad': p.edad,
-                    'Sexo': p.sexo,
-                    'Diagnóstico': p.enfermedad,
-                    'Observaciones': p.observaciones,
-                    'Teléfono': p.telefono || '',
-                    'Email': p.email || '',
-                    'Dirección': p.direccion || '',
-                    'Fecha Registro': new Date(p.fechaRegistro).toLocaleDateString(),
-                    'Última Actualización': new Date(p.ultimaActualizacion).toLocaleDateString()
-                }));
-                
-                const wsPrincipal = XLSX.utils.json_to_sheet(datosPrincipales);
-                
-                // Ajustar ancho de columnas
-                const wscols = [
-                    {wch: 15}, {wch: 30}, {wch: 8}, {wch: 10}, {wch: 25},
-                    {wch: 40}, {wch: 15}, {wch: 25}, {wch: 30}, {wch: 15}, {wch: 15}
-                ];
-                wsPrincipal['!cols'] = wscols;
-                
-                XLSX.utils.book_append_sheet(wb, wsPrincipal, "Pacientes");
-                
-                // Hoja de estadísticas detalladas
-                const enfermedades = {};
-                pacientes.forEach(p => {
-                    enfermedades[p.enfermedad] = (enfermedades[p.enfermedad] || 0) + 1;
-                });
-                
-                const topEnfermedades = Object.entries(enfermedades)
-                    .map(([enf, cant]) => ({
-                        'Enfermedad': enf,
-                        'Pacientes': cant,
-                        'Porcentaje': ((cant / pacientes.length) * 100).toFixed(2) + '%'
-                    }))
-                    .sort((a, b) => b.Pacientes - a.Pacientes);
-                
-                const wsEstadisticas = XLSX.utils.json_to_sheet([
-                    { 'Métrica': 'Total Pacientes', 'Valor': pacientes.length },
-                    { 'Métrica': 'Hombres', 'Valor': pacientes.filter(p => p.sexo === 'Masculino').length },
-                    { 'Métrica': 'Mujeres', 'Valor': pacientes.filter(p => p.sexo === 'Femenino').length },
-                    { 'Métrica': 'Edad Promedio', 'Valor': (pacientes.reduce((sum, p) => sum + p.edad, 0) / pacientes.length).toFixed(1) },
-                    { 'Métrica': 'Edad Mínima', 'Valor': Math.min(...pacientes.map(p => p.edad)) },
-                    { 'Métrica': 'Edad Máxima', 'Valor': Math.max(...pacientes.map(p => p.edad)) },
-                    { 'Métrica': 'Enfermedades Distintas', 'Valor': Object.keys(enfermedades).length },
-                    { 'Métrica': 'Fecha Exportación', 'Valor': new Date().toLocaleString() }
-                ]);
-                
-                XLSX.utils.book_append_sheet(wb, wsEstadisticas, "Estadísticas");
-                
-                // Hoja de top enfermedades
-                const wsEnfermedades = XLSX.utils.json_to_sheet(topEnfermedades);
-                XLSX.utils.book_append_sheet(wb, wsEnfermedades, "Top Enfermedades");
-                
-                // Guardar archivo
-                const nombreArchivo = `pacientes_completo_${new Date().toISOString().slice(0,10)}.xlsx`;
-                XLSX.writeFile(wb, nombreArchivo);
-                
-                mostrarToast('success', 'Excel generado', `Se exportaron ${pacientes.length} pacientes`);
-            } catch (error) {
-                mostrarToast('error', 'Error', 'No se pudo generar el archivo Excel');
-                console.error(error);
-            }
+            const wb = XLSX.utils.book_new();
+            
+            const datos = pacientes.map(p => ({
+                'Código': p.codigo,
+                'Nombre': p.nombre,
+                'Edad': p.edad,
+                'Sexo': p.sexo,
+                'Diagnóstico': p.enfermedad,
+                'Observaciones': p.observaciones,
+                'Teléfono': p.telefono,
+                '# Exámenes': p.examenes ? p.examenes.length : 0,
+                'Fecha Registro': new Date(p.fechaRegistro).toLocaleDateString()
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(datos);
+            XLSX.utils.book_append_sheet(wb, ws, "Pacientes");
+            
+            XLSX.writeFile(wb, `pacientes_${new Date().toISOString().slice(0,10)}.xlsx`);
+            mostrarToast('success', 'Excel generado', `Se exportaron ${pacientes.length} pacientes`);
         }
 
         function exportarExcelFiltrado() {
             if (pacientesFiltrados.length === 0) {
-                mostrarToast('warning', 'Sin datos', 'No hay pacientes filtrados para exportar');
+                mostrarToast('warning', 'Sin datos', 'No hay pacientes filtrados');
                 return;
             }
+
+            const wb = XLSX.utils.book_new();
             
-            try {
-                const wb = XLSX.utils.book_new();
-                
-                const datosFiltrados = pacientesFiltrados.map(p => ({
-                    'Código': p.codigo,
-                    'Nombre': p.nombre,
-                    'Edad': p.edad,
-                    'Sexo': p.sexo,
-                    'Diagnóstico': p.enfermedad,
-                    'Observaciones': p.observaciones,
-                    'Teléfono': p.telefono || '',
-                    'Email': p.email || ''
-                }));
-                
-                const ws = XLSX.utils.json_to_sheet(datosFiltrados);
-                
-                XLSX.utils.book_append_sheet(wb, ws, "Resultados Filtrados");
-                
-                // Agregar información de filtros
-                const filtrosInfo = [
-                    { 'Filtro': 'Enfermedad', 'Valor': document.getElementById('filtroEnfermedad').value || 'Todos' },
-                    { 'Filtro': 'Código', 'Valor': document.getElementById('filtroCodigo').value || 'Todos' },
-                    { 'Filtro': 'Nombre', 'Valor': document.getElementById('filtroNombre').value || 'Todos' },
-                    { 'Filtro': 'Sexo', 'Valor': document.getElementById('filtroSexo').value || 'Todos' },
-                    { 'Filtro': 'Total registros', 'Valor': pacientesFiltrados.length }
-                ];
-                
-                const wsFiltros = XLSX.utils.json_to_sheet(filtrosInfo);
-                XLSX.utils.book_append_sheet(wb, wsFiltros, "Filtros Aplicados");
-                
-                const nombreArchivo = `filtrados_${new Date().toISOString().slice(0,10)}.xlsx`;
-                XLSX.writeFile(wb, nombreArchivo);
-                
-                mostrarToast('success', 'Excel generado', `Se exportaron ${pacientesFiltrados.length} registros`);
-            } catch (error) {
-                mostrarToast('error', 'Error', 'No se pudo generar el archivo Excel');
-            }
+            const datos = pacientesFiltrados.map(p => ({
+                'Código': p.codigo,
+                'Nombre': p.nombre,
+                'Edad': p.edad,
+                'Sexo': p.sexo,
+                'Diagnóstico': p.enfermedad
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(datos);
+            XLSX.utils.book_append_sheet(wb, ws, "Filtrados");
+            
+            XLSX.writeFile(wb, `filtrados_${new Date().toISOString().slice(0,10)}.xlsx`);
+            mostrarToast('success', 'Excel generado', `Se exportaron ${pacientesFiltrados.length} registros`);
         }
 
         function exportarExcelResumen() {
-            if (pacientes.length === 0) {
-                mostrarToast('warning', 'Sin datos', 'No hay pacientes para generar resumen');
+            if (pacientes.length === 0) return;
+
+            const wb = XLSX.utils.book_new();
+            
+            const resumen = [
+                { 'Métrica': 'Total Pacientes', 'Valor': pacientes.length },
+                { 'Métrica': 'Hombres', 'Valor': pacientes.filter(p => p.sexo === 'Masculino').length },
+                { 'Métrica': 'Mujeres', 'Valor': pacientes.filter(p => p.sexo === 'Femenino').length },
+                { 'Métrica': 'Edad Promedio', 'Valor': (pacientes.reduce((sum, p) => sum + p.edad, 0) / pacientes.length).toFixed(1) },
+                { 'Métrica': 'Total Exámenes', 'Valor': pacientes.reduce((sum, p) => sum + (p.examenes ? p.examenes.length : 0), 0) }
+            ];
+            
+            const ws = XLSX.utils.json_to_sheet(resumen);
+            XLSX.utils.book_append_sheet(wb, ws, "Resumen");
+            
+            XLSX.writeFile(wb, `resumen_${new Date().toISOString().slice(0,10)}.xlsx`);
+            mostrarToast('success', 'Resumen exportado', 'Estadísticas generadas');
+        }
+
+        function exportarExcelExamenes() {
+            if (!pacienteSeleccionado) {
+                mostrarToast('warning', 'Seleccione paciente', 'Seleccione un paciente primero');
                 return;
             }
-            
-            try {
-                const wb = XLSX.utils.book_new();
-                
-                // Resumen general
-                const resumenGeneral = [
-                    { 'Indicador': 'Total de Pacientes', 'Valor': pacientes.length },
-                    { 'Indicador': 'Hombres', 'Valor': pacientes.filter(p => p.sexo === 'Masculino').length },
-                    { 'Indicador': 'Mujeres', 'Valor': pacientes.filter(p => p.sexo === 'Femenino').length },
-                    { 'Indicador': 'Edad Promedio', 'Valor': (pacientes.reduce((sum, p) => sum + p.edad, 0) / pacientes.length).toFixed(1) },
-                    { 'Indicador': 'Edad Mínima', 'Valor': Math.min(...pacientes.map(p => p.edad)) },
-                    { 'Indicador': 'Edad Máxima', 'Valor': Math.max(...pacientes.map(p => p.edad)) }
-                ];
-                
-                const wsResumen = XLSX.utils.json_to_sheet(resumenGeneral);
-                XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen General");
-                
-                // Distribución por edad
-                const rangosEdad = {
-                    '0-18 años': 0,
-                    '19-30 años': 0,
-                    '31-45 años': 0,
-                    '46-60 años': 0,
-                    '61-75 años': 0,
-                    '75+ años': 0
-                };
-                
-                pacientes.forEach(p => {
-                    if (p.edad <= 18) rangosEdad['0-18 años']++;
-                    else if (p.edad <= 30) rangosEdad['19-30 años']++;
-                    else if (p.edad <= 45) rangosEdad['31-45 años']++;
-                    else if (p.edad <= 60) rangosEdad['46-60 años']++;
-                    else if (p.edad <= 75) rangosEdad['61-75 años']++;
-                    else rangosEdad['75+ años']++;
-                });
-                
-                const datosEdad = Object.entries(rangosEdad).map(([rango, cantidad]) => ({
-                    'Rango de Edad': rango,
-                    'Cantidad': cantidad,
-                    'Porcentaje': ((cantidad / pacientes.length) * 100).toFixed(2) + '%'
-                }));
-                
-                const wsEdad = XLSX.utils.json_to_sheet(datosEdad);
-                XLSX.utils.book_append_sheet(wb, wsEdad, "Distribución por Edad");
-                
-                // Top 10 enfermedades
-                const enfermedades = {};
-                pacientes.forEach(p => {
-                    enfermedades[p.enfermedad] = (enfermedades[p.enfermedad] || 0) + 1;
-                });
-                
-                const topEnfermedades = Object.entries(enfermedades)
-                    .map(([enf, cant]) => ({
-                        'Enfermedad': enf,
-                        'Pacientes': cant,
-                        'Porcentaje': ((cant / pacientes.length) * 100).toFixed(2) + '%'
-                    }))
-                    .sort((a, b) => b.Pacientes - a.Pacientes)
-                    .slice(0, 10);
-                
-                const wsEnfermedades = XLSX.utils.json_to_sheet(topEnfermedades);
-                XLSX.utils.book_append_sheet(wb, wsEnfermedades, "Top 10 Enfermedades");
-                
-                const nombreArchivo = `resumen_estadistico_${new Date().toISOString().slice(0,10)}.xlsx`;
-                XLSX.writeFile(wb, nombreArchivo);
-                
-                mostrarToast('success', 'Excel generado', 'Resumen estadístico exportado');
-            } catch (error) {
-                mostrarToast('error', 'Error', 'No se pudo generar el resumen');
-            }
-        }
 
-        function exportarCSV() {
-            if (pacientes.length === 0) {
-                mostrarToast('warning', 'Sin datos', 'No hay pacientes para exportar');
+            if (!pacienteSeleccionado.examenes || pacienteSeleccionado.examenes.length === 0) {
+                mostrarToast('warning', 'Sin exámenes', 'Este paciente no tiene exámenes');
                 return;
             }
+
+            const wb = XLSX.utils.book_new();
             
-            try {
-                const headers = ['CÓDIGO', 'NOMBRE', 'EDAD', 'SEXO', 'ENFERMEDAD', 'OBSERVACIONES', 'TELÉFONO', 'EMAIL', 'DIRECCIÓN', 'FECHA REGISTRO'];
-                const csvRows = [];
-                
-                csvRows.push(headers.join(';'));
-                
-                pacientes.forEach(p => {
-                    const row = [
-                        p.codigo,
-                        `"${p.nombre.replace(/"/g, '""')}"`,
-                        p.edad,
-                        p.sexo,
-                        `"${p.enfermedad.replace(/"/g, '""')}"`,
-                        `"${p.observaciones.replace(/"/g, '""')}"`,
-                        p.telefono || '',
-                        p.email || '',
-                        `"${p.direccion?.replace(/"/g, '""') || ''}"`,
-                        new Date(p.fechaRegistro).toLocaleDateString()
-                    ];
-                    csvRows.push(row.join(';'));
-                });
-                
-                csvRows.push('');
-                csvRows.push('ESTADÍSTICAS;VALOR');
-                csvRows.push(`Total Pacientes;${pacientes.length}`);
-                csvRows.push(`Fecha Exportación;${new Date().toLocaleString()}`);
-                
-                const csvString = csvRows.join('\n');
-                const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
-                
-                const nombreArchivo = `pacientes_${new Date().toISOString().slice(0,10)}.csv`;
-                saveAs(blob, nombreArchivo);
-                
-                mostrarToast('success', 'CSV generado', 'Archivo CSV listo para Excel');
-            } catch (error) {
-                mostrarToast('error', 'Error', 'No se pudo generar el archivo CSV');
-            }
+            const datos = pacienteSeleccionado.examenes.map(e => ({
+                'Examen': e.nombre,
+                'Categoría': e.categoria,
+                'Valor': e.valor,
+                'Unidad': e.unidad,
+                'Fecha': e.fecha
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(datos);
+            XLSX.utils.book_append_sheet(wb, ws, "Exámenes");
+            
+            XLSX.writeFile(wb, `examenes_${pacienteSeleccionado.nombre}_${new Date().toISOString().slice(0,10)}.xlsx`);
+            mostrarToast('success', 'Exámenes exportados', `${datos.length} registros exportados`);
         }
 
-        function exportarFiltrados() {
-            exportarExcelFiltrado();
-        }
-
-        // ==================== CIERRE DE MODAL CON ESC ====================
+        // Cerrar modal con ESC
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                cerrarModal();
-            }
-        });
-
-        // ==================== CLICK FUERA DEL MODAL ====================
-        document.getElementById('modalPaciente').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modalPaciente')) {
-                cerrarModal();
-            }
+            if (e.key === 'Escape') cerrarModal();
         });
     </script>
 </body>
-</html>
+    </html>
