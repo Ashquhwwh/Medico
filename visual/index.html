@@ -159,7 +159,7 @@
             box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
         }
 
-        /* Tratamiento */
+        /* Sección de Tratamiento - MÚLTIPLES MEDICAMENTOS CON DURACIÓN */
         .treatment-section {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
             padding: 20px;
@@ -176,6 +176,76 @@
 
         .treatment-header i { font-size: 24px; color: #d97706; }
         .treatment-header h3 { color: #92400e; font-size: 18px; font-weight: 600; }
+
+        .medicamentos-container {
+            margin-bottom: 15px;
+        }
+
+        .medicamento-item {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .medicamento-nombre {
+            grid-column: 1 / 2;
+        }
+
+        .medicamento-dosis {
+            grid-column: 2 / 3;
+        }
+
+        .medicamento-duracion {
+            grid-column: 3 / 4;
+        }
+
+        .btn-eliminar-medicamento {
+            grid-column: 4 / 5;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-eliminar-medicamento:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .btn-agregar-medicamento {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-agregar-medicamento:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
 
         /* Tabs de exámenes */
         .examenes-tabs {
@@ -530,7 +600,7 @@
 
         .seguimientos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 16px;
             margin-top: 20px;
         }
@@ -560,6 +630,35 @@
 
         .seguimiento-fecha.nuevo {
             background: var(--primary);
+        }
+
+        .medicamentos-lista {
+            margin-top: 8px;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .medicamento-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 3px;
+            max-width: 100%;
+        }
+
+        .medicamento-tag strong {
+            font-size: 13px;
+        }
+
+        .medicamento-tag small {
+            display: block;
+            font-size: 10px;
+            opacity: 0.9;
+            margin-top: 2px;
         }
 
         /* Sección de exámenes */
@@ -973,6 +1072,29 @@
                 padding: 20px;
             }
         }
+
+        @media (max-width: 768px) {
+            .medicamento-item {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .medicamento-nombre {
+                grid-column: 1 / 3;
+            }
+            
+            .medicamento-dosis {
+                grid-column: 1 / 2;
+            }
+            
+            .medicamento-duracion {
+                grid-column: 2 / 3;
+            }
+            
+            .btn-eliminar-medicamento {
+                grid-column: 1 / 3;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1044,27 +1166,31 @@
                     </div>
                 </div>
 
-                <!-- Tratamiento -->
+                <!-- Tratamiento - MÚLTIPLES MEDICAMENTOS CON DURACIÓN INDIVIDUAL -->
                 <div class="treatment-section">
                     <div class="treatment-header">
                         <i class="fas fa-notes-medical"></i>
-                        <h3>Plan de Tratamiento Inicial</h3>
+                        <h3>Plan de Tratamiento - Medicamentos</h3>
                     </div>
-                    <div class="form-grid">
+                    
+                    <p style="margin-bottom: 15px; color: #92400e;"><i class="fas fa-info-circle"></i> Cada medicamento puede tener su propia duración de tratamiento</p>
+                    
+                    <!-- Contenedor de medicamentos -->
+                    <div id="medicamentosContainer" class="medicamentos-container">
+                        <!-- Los medicamentos se agregarán aquí dinámicamente -->
+                    </div>
+                    
+                    <button type="button" class="btn-agregar-medicamento" onclick="agregarMedicamento()">
+                        <i class="fas fa-plus-circle"></i> Agregar otro medicamento
+                    </button>
+                    
+                    <div class="form-grid" style="margin-top: 15px;">
                         <div class="form-group">
-                            <label><i class="fas fa-pills"></i> Medicamentos</label>
-                            <input type="text" id="medicamentos" placeholder="Ej: Paracetamol 500mg c/8h">
+                            <label><i class="fas fa-clipboard-list"></i> Indicaciones generales</label>
+                            <textarea id="indicaciones" placeholder="Instrucciones adicionales para todos los medicamentos..." rows="2"></textarea>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-clock"></i> Duración</label>
-                            <input type="text" id="duracion" placeholder="Ej: 7 días">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-clipboard-list"></i> Indicaciones</label>
-                            <textarea id="indicaciones" placeholder="Instrucciones adicionales..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar-check"></i> Próxima cita</label>
+                            <label><i class="fas fa-calendar-check"></i> Próxima cita de control</label>
                             <input type="date" id="proximaCita">
                         </div>
                     </div>
@@ -1184,9 +1310,8 @@
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                             <div class="paciente-detalle-item">
-                                <div class="detalle-label">TRATAMIENTO ACTUAL</div>
-                                <div class="detalle-value" id="detalleTratamiento"></div>
-                                <div id="detalleProximaCita" style="margin-top: 8px; font-size: 14px;"></div>
+                                <div class="detalle-label">MEDICAMENTOS</div>
+                                <div class="detalle-value" id="detalleMedicamentos"></div>
                             </div>
                             <div class="paciente-detalle-item">
                                 <div class="detalle-label">FECHA REGISTRO</div>
@@ -1240,20 +1365,25 @@
                                     <div class="descripcion">Número de contacto (opcional)</div>
                                     <input type="text" id="editTelefono" placeholder="Ej: +34 600 123 456">
                                 </div>
-                                
-                                <div class="campo-edicion">
-                                    <label>💊 Tratamiento</label>
-                                    <div class="descripcion">Medicamentos o tratamiento actual</div>
-                                    <input type="text" id="editTratamiento" placeholder="Ej: Losartán 50mg/día">
-                                </div>
-                                
-                                <div class="campo-edicion">
-                                    <label>📅 Próxima Cita</label>
-                                    <div class="descripcion">Fecha de la próxima consulta</div>
-                                    <input type="date" id="editProximaCita">
-                                </div>
                             </div>
-                            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                            
+                            <!-- Sección de medicamentos en edición -->
+                            <div class="campo-edicion" style="grid-column: span 2;">
+                                <label>💊 Medicamentos (cada uno con su duración)</label>
+                                <div class="descripcion">Puede agregar múltiples medicamentos, cada uno con su propia duración</div>
+                                <div id="editMedicamentosContainer" class="medicamentos-container"></div>
+                                <button type="button" class="btn-agregar-medicamento" onclick="agregarMedicamentoEdicion()">
+                                    <i class="fas fa-plus-circle"></i> Agregar otro medicamento
+                                </button>
+                            </div>
+                            
+                            <div class="campo-edicion">
+                                <label>📅 Próxima Cita de Control</label>
+                                <div class="descripcion">Fecha de la próxima consulta general</div>
+                                <input type="date" id="editProximaCita">
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; grid-column: span 2;">
                                 <button class="btn btn-secondary" onclick="cancelarEdicion()">Cancelar</button>
                                 <button class="btn btn-success" onclick="guardarEdicionPaciente()">Guardar Cambios</button>
                             </div>
@@ -1281,27 +1411,30 @@
                 </h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
                     <div>
-                        <label>Fecha</label>
+                        <label>Fecha del seguimiento</label>
                         <input type="date" id="nuevoSeguimientoFecha" class="buscador-input">
                     </div>
                     <div>
-                        <label>Diagnóstico</label>
+                        <label>Diagnóstico actual</label>
                         <input type="text" id="nuevoSeguimientoDiagnostico" class="buscador-input" placeholder="Diagnóstico actual">
                     </div>
-                    <div>
-                        <label>Tratamiento</label>
-                        <input type="text" id="nuevoSeguimientoTratamiento" class="buscador-input" placeholder="Cambios en tratamiento">
+                    <div style="grid-column: span 2;">
+                        <label>Medicamentos (cada uno con su duración)</label>
+                        <div id="nuevoSeguimientoMedicamentosContainer" class="medicamentos-container"></div>
+                        <button type="button" class="btn-agregar-medicamento" onclick="agrpZEAWYtiB6bJ16NuLbGCc6CZ6jJdKfb63()">
+                            <i class="fas fa-plus-circle"></i> Agregar medicamento
+                        </button>
                     </div>
                     <div>
-                        <label>Evolución</label>
-                        <textarea id="nuevoSeguimientoEvolucion" class="buscador-input" rows="2" placeholder="Evolución del paciente..."></textarea>
+                        <label>Evolución del paciente</label>
+                        <textarea id="nuevoSeguimientoEvolucion" class="buscador-input" rows="3" placeholder="Evolución del paciente..."></textarea>
                     </div>
                     <div>
-                        <label>Nuevos exámenes</label>
-                        <textarea id="nuevoSeguimientoExamenes" class="buscador-input" rows="2" placeholder="Resultados de exámenes..."></textarea>
+                        <label>Nuevos exámenes realizados</label>
+                        <textarea id="nuevoSeguimientoExamenes" class="buscador-input" rows="3" placeholder="Resultados de exámenes..."></textarea>
                     </div>
                     <div>
-                        <label>Próxima cita</label>
+                        <label>Próxima cita de control</label>
                         <input type="date" id="nuevoSeguimientoProximaCita" class="buscador-input">
                     </div>
                 </div>
@@ -1375,11 +1508,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Valor</label>
+                    <label>Valor / Resultado</label>
                     <input type="text" id="examenValor" class="buscador-input" placeholder="Ingrese el valor">
                 </div>
                 <div class="form-group">
-                    <label>Unidad</label>
+                    <label>Unidad de medida</label>
                     <input type="text" id="examenUnidad" class="buscador-input" readonly>
                 </div>
                 <div class="form-group">
@@ -1416,6 +1549,9 @@
         let pacienteSeleccionadoExportar = null;
         let examenSeleccionadoId = null;
         let indiceExamenEditando = null;
+
+        // Contador para IDs únicos de medicamentos
+        let medicamentoCounter = 0;
 
         // Lista de exámenes
         const examenesLista = [
@@ -1458,32 +1594,98 @@
             return fecha.toLocaleString('es-ES', opciones);
         }
 
+        // ==================== FUNCIONES PARA MEDICAMENTOS CON DURACIÓN ====================
+        function agregarMedicamento(nombre = '', dosis = '', duracion = '', containerId = 'medicamentosContainer') {
+            const container = document.getElementById(containerId);
+            const id = `med_${Date.now()}_${medicamentoCounter++}`;
+            
+            const div = document.createElement('div');
+            div.className = 'medicamento-item';
+            div.id = id;
+            div.innerHTML = `
+                <input type="text" class="medicamento-nombre buscador-input" placeholder="Nombre del medicamento (ej: Paracetamol)" value="${nombre}">
+                <input type="text" class="medicamento-dosis buscador-input" placeholder="Dosis (ej: 500mg c/8h)" value="${dosis}">
+                <input type="text" class="medicamento-duracion buscador-input" placeholder="Duración (ej: 7 días, 3 meses)" value="${duracion}">
+                <button type="button" class="btn-eliminar-medicamento" onclick="eliminarMedicamento('${id}')">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            
+            container.appendChild(div);
+        }
+
+        function eliminarMedicamento(id) {
+            document.getElementById(id)?.remove();
+        }
+
+        function obtenerMedicamentos(containerId = 'medicamentosContainer') {
+            const container = document.getElementById(containerId);
+            const items = container.querySelectorAll('.medicamento-item');
+            const medicamentos = [];
+            
+            items.forEach(item => {
+                const nombre = item.querySelector('.medicamento-nombre')?.value.trim();
+                const dosis = item.querySelector('.medicamento-dosis')?.value.trim();
+                const duracion = item.querySelector('.medicamento-duracion')?.value.trim();
+                
+                if (nombre) {
+                    medicamentos.push({
+                        nombre: nombre,
+                        dosis: dosis || 'Sin especificar',
+                        duracion: duracion || 'No especificada'
+                    });
+                }
+            });
+            
+            return medicamentos;
+        }
+
+        function mostrarMedicamentos(medicamentos, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            if (medicamentos && medicamentos.length > 0) {
+                medicamentos.forEach(med => {
+                    agregarMedicamento(med.nombre, med.dosis, med.duracion, containerId);
+                });
+            } else {
+                // Agregar un medicamento vacío por defecto
+                agregarMedicamento('', '', '', containerId);
+            }
+        }
+
         // ==================== INICIALIZACIÓN ====================
         document.addEventListener('DOMContentLoaded', () => {
             cargarPacientes();
             generarCamposExamenes();
             cargarSelectExamenes();
             actualizarEstadisticas();
+            
+            // Agregar un medicamento por defecto en el registro
+            agregarMedicamento();
         });
 
         function cargarPacientes() {
-            const stored = localStorage.getItem('medidata_completo_v6');
+            const stored = localStorage.getItem('medidata_completo_v8');
             pacientes = stored ? JSON.parse(stored) : [];
             
-            // Asegurar que todos los exámenes tengan fecha formateada correctamente
+            // Asegurar que todos los pacientes tengan el array de medicamentos con duración
             pacientes.forEach(paciente => {
-                if (paciente.examenes) {
-                    paciente.examenes.forEach(examen => {
-                        if (!examen.fechaFormateada && examen.fechaISO) {
-                            examen.fechaFormateada = formatearFecha(examen.fechaISO, examen.hora);
-                        }
-                    });
+                if (!paciente.medicamentos) {
+                    paciente.medicamentos = [];
                 }
+                // Asegurar que cada medicamento tenga campo duracion
+                paciente.medicamentos.forEach(med => {
+                    if (!med.duracion) {
+                        med.duracion = 'No especificada';
+                    }
+                });
             });
         }
 
         function guardarPacientes() {
-            localStorage.setItem('medidata_completo_v6', JSON.stringify(pacientes));
+            localStorage.setItem('medidata_completo_v8', JSON.stringify(pacientes));
             actualizarEstadisticas();
         }
 
@@ -1559,6 +1761,8 @@
                 return;
             }
 
+            const medicamentos = obtenerMedicamentos('medicamentosContainer');
+
             const examenesPaciente = [];
             examenesLista.forEach(ex => {
                 const input = document.getElementById(`examen_${ex.id}`);
@@ -1590,9 +1794,8 @@
                 enfermedad: enfermedad,
                 observaciones: document.getElementById('observaciones').value.trim() || 'Sin observaciones',
                 telefono: document.getElementById('telefono').value.trim() || 'No especificado',
+                medicamentos: medicamentos,
                 tratamiento: {
-                    medicamentos: document.getElementById('medicamentos').value.trim() || 'No indicado',
-                    duracion: document.getElementById('duracion').value.trim() || 'No especificada',
                     indicaciones: document.getElementById('indicaciones').value.trim() || 'Sin indicaciones',
                     proximaCita: document.getElementById('proximaCita').value || 'No programada'
                 },
@@ -1614,10 +1817,12 @@
             document.getElementById('enfermedad').value = '';
             document.getElementById('observaciones').value = '';
             document.getElementById('telefono').value = '';
-            document.getElementById('medicamentos').value = '';
-            document.getElementById('duracion').value = '';
             document.getElementById('indicaciones').value = '';
             document.getElementById('proximaCita').value = '';
+            
+            // Limpiar medicamentos
+            document.getElementById('medicamentosContainer').innerHTML = '';
+            agregarMedicamento(); // Agregar uno por defecto
             
             examenesLista.forEach(ex => {
                 const input = document.getElementById(`examen_${ex.id}`);
@@ -1699,9 +1904,24 @@
             
             document.getElementById('detalleDiagnostico').textContent = paciente.enfermedad;
             document.getElementById('detalleTelefono').textContent = paciente.telefono || 'No especificado';
-            document.getElementById('detalleTratamiento').textContent = paciente.tratamiento?.medicamentos || 'No hay tratamiento';
-            document.getElementById('detalleProximaCita').innerHTML = paciente.tratamiento?.proximaCita ? 
-                `<i class="far fa-calendar-alt"></i> Próxima cita: ${paciente.tratamiento.proximaCita}` : '';
+            
+            // Mostrar medicamentos con duración
+            if (paciente.medicamentos && paciente.medicamentos.length > 0) {
+                let medicamentosHtml = '<div class="medicamentos-lista">';
+                paciente.medicamentos.forEach(med => {
+                    medicamentosHtml += `
+                        <span class="medicamento-tag">
+                            <strong>${med.nombre}</strong><br>
+                            <small>${med.dosis} | Duración: ${med.duracion}</small>
+                        </span> 
+                    `;
+                });
+                medicamentosHtml += '</div>';
+                document.getElementById('detalleMedicamentos').innerHTML = medicamentosHtml;
+            } else {
+                document.getElementById('detalleMedicamentos').innerHTML = 'No hay medicamentos recetados';
+            }
+            
             document.getElementById('detalleFechaRegistro').textContent = new Date(paciente.fechaRegistro).toLocaleDateString();
             
             document.getElementById('seguimientosPacienteNombre').textContent = paciente.nombre;
@@ -1721,8 +1941,10 @@
             document.getElementById('editSexo').value = pacienteActual.sexo || 'Masculino';
             document.getElementById('editDiagnostico').value = pacienteActual.enfermedad || '';
             document.getElementById('editTelefono').value = pacienteActual.telefono || '';
-            document.getElementById('editTratamiento').value = (pacienteActual.tratamiento && pacienteActual.tratamiento.medicamentos) || '';
             document.getElementById('editProximaCita').value = (pacienteActual.tratamiento && pacienteActual.tratamiento.proximaCita) || '';
+            
+            // Mostrar medicamentos con duración
+            mostrarMedicamentos(pacienteActual.medicamentos || [], 'editMedicamentosContainer');
             
             // Mostrar el formulario
             document.getElementById('formularioEdicion').style.display = 'block';
@@ -1747,7 +1969,6 @@
             const nuevoSexo = document.getElementById('editSexo').value;
             const nuevoDiagnostico = document.getElementById('editDiagnostico').value.trim();
             const nuevoTelefono = document.getElementById('editTelefono').value.trim();
-            const nuevoTratamiento = document.getElementById('editTratamiento').value.trim();
             const nuevaProximaCita = document.getElementById('editProximaCita').value;
             
             // Validar campos obligatorios
@@ -1756,18 +1977,21 @@
                 return;
             }
             
+            // Obtener medicamentos con duración
+            const medicamentos = obtenerMedicamentos('editMedicamentosContainer');
+            
             // Actualizar los datos del paciente
             pacienteActual.nombre = nuevoNombre;
             pacienteActual.edad = parseInt(nuevaEdad);
             pacienteActual.sexo = nuevoSexo;
             pacienteActual.enfermedad = nuevoDiagnostico;
             pacienteActual.telefono = nuevoTelefono;
+            pacienteActual.medicamentos = medicamentos;
             
             // Actualizar tratamiento
             if (!pacienteActual.tratamiento) {
                 pacienteActual.tratamiento = {};
             }
-            pacienteActual.tratamiento.medicamentos = nuevoTratamiento || 'No indicado';
             pacienteActual.tratamiento.proximaCita = nuevaProximaCita || 'No programada';
             
             // Actualizar fecha de modificación
@@ -1786,6 +2010,15 @@
             mostrarToast('success', 'Datos actualizados', 'Los cambios fueron guardados correctamente');
         }
 
+        // ==================== FUNCIONES PARA MEDICAMENTOS EN EDICIÓN Y SEGUIMIENTOS ====================
+        function agregarMedicamentoEdicion() {
+            agregarMedicamento('', '', '', 'editMedicamentosContainer');
+        }
+
+        function agrpZEAWYtiB6bJ16NuLbGCc6CZ6jJdKfb63() {
+            agregarMedicamento('', '', '', 'nuevoSeguimientoMedicamentosContainer');
+        }
+
         // ==================== SEGUIMIENTOS ====================
         function mostrarSeguimientosPaciente(paciente) {
             const grid = document.getElementById('seguimientosGrid');
@@ -1802,6 +2035,20 @@
                 const s = seguimientos[i];
                 const esNuevo = i === 0;
                 
+                let medicamentosHtml = '';
+                if (s.medicamentos && s.medicamentos.length > 0) {
+                    medicamentosHtml = '<div class="medicamentos-lista">';
+                    s.medicamentos.forEach(med => {
+                        medicamentosHtml += `
+                            <span class="medicamento-tag">
+                                <strong>${med.nombre}</strong><br>
+                                <small>${med.dosis} | Duración: ${med.duracion}</small>
+                            </span> 
+                        `;
+                    });
+                    medicamentosHtml += '</div>';
+                }
+                
                 html += `
                     <div class="seguimiento-card ${esNuevo ? 'nuevo' : ''}">
                         <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
@@ -1813,9 +2060,10 @@
                         
                         <div style="margin:10px 0; padding:10px; background:#f8fafc; border-radius:8px;">
                             <p><strong><i class="fas fa-stethoscope"></i> Diagnóstico:</strong> ${s.diagnostico || paciente.enfermedad}</p>
-                            <p><strong><i class="fas fa-pills"></i> Tratamiento:</strong> ${s.tratamiento}</p>
+                            <p><strong><i class="fas fa-pills"></i> Medicamentos recetados:</strong></p>
+                            ${medicamentosHtml || '<p>Sin cambios en medicamentos</p>'}
                             <p><strong><i class="fas fa-chart-line"></i> Evolución:</strong> ${s.evolucion}</p>
-                            ${s.examenes ? `<p><strong><i class="fas fa-flask"></i> Exámenes:</strong> ${s.examenes}</p>` : ''}
+                            ${s.examenes ? `<p><strong><i class="fas fa-flask"></i> Exámenes realizados:</strong> ${s.examenes}</p>` : ''}
                             ${s.proximaCita ? `<p><strong><i class="fas fa-calendar-check"></i> Próxima cita:</strong> ${s.proximaCita}</p>` : ''}
                         </div>
                     </div>
@@ -1834,7 +2082,17 @@
             document.getElementById('formularioSeguimiento').style.display = 'block';
             document.getElementById('nuevoSeguimientoFecha').value = new Date().toISOString().split('T')[0];
             document.getElementById('nuevoSeguimientoDiagnostico').value = pacienteActual.enfermedad || '';
-            document.getElementById('nuevoSeguimientoTratamiento').value = pacienteActual.tratamiento?.medicamentos || '';
+            
+            // Limpiar y cargar medicamentos actuales
+            document.getElementById('nuevoSeguimientoMedicamentosContainer').innerHTML = '';
+            if (pacienteActual.medicamentos && pacienteActual.medicamentos.length > 0) {
+                pacienteActual.medicamentos.forEach(med => {
+                    agregarMedicamento(med.nombre, med.dosis, med.duracion, 'nuevoSeguimientoMedicamentosContainer');
+                });
+            } else {
+                agregarMedicamento('', '', '', 'nuevoSeguimientoMedicamentosContainer');
+            }
+            
             document.getElementById('nuevoSeguimientoEvolucion').value = '';
             document.getElementById('nuevoSeguimientoExamenes').value = '';
             document.getElementById('nuevoSeguimientoProximaCita').value = pacienteActual.tratamiento?.proximaCita || '';
@@ -1857,7 +2115,7 @@
             }
             
             const diagnostico = document.getElementById('nuevoSeguimientoDiagnostico').value.trim();
-            const tratamiento = document.getElementById('nuevoSeguimientoTratamiento').value.trim();
+            const medicamentos = obtenerMedicamentos('nuevoSeguimientoMedicamentosContainer');
             const evolucion = document.getElementById('nuevoSeguimientoEvolucion').value.trim();
             
             if (!diagnostico) {
@@ -1868,7 +2126,7 @@
             const nuevoSeguimiento = {
                 fecha: fecha,
                 diagnostico: diagnostico,
-                tratamiento: tratamiento || 'Sin cambios',
+                medicamentos: medicamentos,
                 evolucion: evolucion || 'Sin evolución',
                 examenes: document.getElementById('nuevoSeguimientoExamenes').value || null,
                 proximaCita: document.getElementById('nuevoSeguimientoProximaCita').value || null,
@@ -1883,10 +2141,9 @@
                 pacienteActual.enfermedad = diagnostico;
             }
             
-            // Actualizar tratamiento principal si cambió
-            if (tratamiento && tratamiento !== 'Sin cambios') {
-                if (!pacienteActual.tratamiento) pacienteActual.tratamiento = {};
-                pacienteActual.tratamiento.medicamentos = tratamiento;
+            // Actualizar medicamentos principales
+            if (medicamentos && medicamentos.length > 0) {
+                pacienteActual.medicamentos = medicamentos;
             }
             
             if (nuevoSeguimiento.proximaCita) {
@@ -1905,7 +2162,7 @@
             mostrarToast('success', 'Seguimiento guardado', 'Se agregó al historial');
         }
 
-        // ==================== EXÁMENES (CON FECHAS CORREGIDAS) ====================
+        // ==================== EXÁMENES ====================
         function mostrarExamenesPaciente(paciente) {
             const grid = document.getElementById('examenesGrid');
             
@@ -2273,19 +2530,24 @@
                 return;
             }
             
-            const datos = pacientes.map(p => ({
-                'Código': p.codigo,
-                'Nombre': p.nombre,
-                'Edad': p.edad,
-                'Sexo': p.sexo,
-                'Diagnóstico': p.enfermedad,
-                'Teléfono': p.telefono,
-                'Tratamiento': p.tratamiento?.medicamentos || '',
-                'Próxima Cita': p.tratamiento?.proximaCita || '',
-                'Total Exámenes': p.examenes?.length || 0,
-                'Total Seguimientos': p.seguimientos?.length || 0,
-                'Fecha Registro': new Date(p.fechaRegistro).toLocaleDateString()
-            }));
+            const datos = pacientes.map(p => {
+                const medicamentosStr = p.medicamentos ? 
+                    p.medicamentos.map(m => `${m.nombre} - ${m.dosis} (Duración: ${m.duracion})`).join('; ') : '';
+                
+                return {
+                    'Código': p.codigo,
+                    'Nombre': p.nombre,
+                    'Edad': p.edad,
+                    'Sexo': p.sexo,
+                    'Diagnóstico': p.enfermedad,
+                    'Medicamentos (con duración)': medicamentosStr,
+                    'Teléfono': p.telefono,
+                    'Próxima Cita': p.tratamiento?.proximaCita || '',
+                    'Total Exámenes': p.examenes?.length || 0,
+                    'Total Seguimientos': p.seguimientos?.length || 0,
+                    'Fecha Registro': new Date(p.fechaRegistro).toLocaleDateString()
+                };
+            });
             
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.json_to_sheet(datos);
@@ -2432,6 +2694,17 @@
                 'Valor': paciente.telefono || 'No especificado'
             });
             
+            if (paciente.medicamentos && paciente.medicamentos.length > 0) {
+                paciente.medicamentos.forEach(med => {
+                    datosHistorial.push({
+                        'Tipo': 'MEDICAMENTO',
+                        'Fecha': '-',
+                        'Campo': 'Medicamento',
+                        'Valor': `${med.nombre} - ${med.dosis} (Duración: ${med.duracion})`
+                    });
+                });
+            }
+            
             // Seguimientos
             if (paciente.seguimientos && paciente.seguimientos.length > 0) {
                 paciente.seguimientos.forEach(s => {
@@ -2441,12 +2714,18 @@
                         'Campo': 'Diagnóstico',
                         'Valor': s.diagnostico || paciente.enfermedad
                     });
-                    datosHistorial.push({
-                        'Tipo': 'SEGUIMIENTO',
-                        'Fecha': s.fecha,
-                        'Campo': 'Tratamiento',
-                        'Valor': s.tratamiento
-                    });
+                    
+                    if (s.medicamentos && s.medicamentos.length > 0) {
+                        s.medicamentos.forEach(med => {
+                            datosHistorial.push({
+                                'Tipo': 'SEGUIMIENTO',
+                                'Fecha': s.fecha,
+                                'Campo': 'Medicamento',
+                                'Valor': `${med.nombre} - ${med.dosis} (Duración: ${med.duracion})`
+                            });
+                        });
+                    }
+                    
                     datosHistorial.push({
                         'Tipo': 'SEGUIMIENTO',
                         'Fecha': s.fecha,
@@ -2525,8 +2804,21 @@
                         <p><strong>Sexo:</strong> ${pacienteActual.sexo}</p>
                         <p><strong>Diagnóstico:</strong> ${pacienteActual.enfermedad}</p>
                         <p><strong>Teléfono:</strong> ${pacienteActual.telefono || 'No especificado'}</p>
-                        <p><strong>Tratamiento actual:</strong> ${pacienteActual.tratamiento?.medicamentos || 'No hay tratamiento'}</p>
-                        <p><strong>Próxima cita:</strong> ${pacienteActual.tratamiento?.proximaCita || 'No programada'}</p>
+                        <p><strong>Medicamentos actuales (con duración):</strong></p>
+                        <ul>
+            `;
+            
+            if (pacienteActual.medicamentos && pacienteActual.medicamentos.length > 0) {
+                pacienteActual.medicamentos.forEach(med => {
+                    html += `<li><strong>${med.nombre}</strong> - ${med.dosis} (Duración: ${med.duracion})</li>`;
+                });
+            } else {
+                html += '<li>No hay medicamentos recetados</li>';
+            }
+            
+            html += `
+                        </ul>
+                        <p><strong>Próxima cita de control:</strong> ${pacienteActual.tratamiento?.proximaCita || 'No programada'}</p>
                         <p><strong>Fecha de registro:</strong> ${new Date(pacienteActual.fechaRegistro).toLocaleDateString()}</p>
                     </div>
             `;
@@ -2546,10 +2838,23 @@
                         <div style="border-left: 4px solid #22c55e; padding: 15px; margin-bottom: 15px; background: #f8fafc; border-radius: 8px;">
                             <p style="color: #64748b; margin-bottom: 8px;"><strong>Fecha:</strong> ${s.fecha}</p>
                             <p><strong>Diagnóstico:</strong> ${s.diagnostico || pacienteActual.enfermedad}</p>
-                            <p><strong>Tratamiento:</strong> ${s.tratamiento}</p>
+                            <p><strong>Medicamentos recetados en esta consulta:</strong></p>
+                            <ul>
+                    `;
+                    
+                    if (s.medicamentos && s.medicamentos.length > 0) {
+                        s.medicamentos.forEach(med => {
+                            html += `<li><strong>${med.nombre}</strong> - ${med.dosis} (Duración: ${med.duracion})</li>`;
+                        });
+                    } else {
+                        html += '<li>Sin cambios en medicamentos</li>';
+                    }
+                    
+                    html += `
+                            </ul>
                             <p><strong>Evolución:</strong> ${s.evolucion}</p>
-                            ${s.examenes ? `<p><strong>Exámenes:</strong> ${s.examenes}</p>` : ''}
-                            ${s.proximaCita ? `<p><strong>Próxima cita:</strong> ${s.proximaCita}</p>` : ''}
+                            ${s.examenes ? `<p><strong>Exámenes realizados:</strong> ${s.examenes}</p>` : ''}
+                            ${s.proximaCita ? `<p><strong>Próxima cita indicada:</strong> ${s.proximaCita}</p>` : ''}
                         </div>
                     `;
                 });
@@ -2571,7 +2876,7 @@
                         <div style="border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
                             <h4 style="color: #2563eb; margin-bottom: 10px;">${ex.nombre} <span style="color: #64748b; font-size: 12px;">(${ex.categoria})</span></h4>
                             <p><strong>Valor actual:</strong> ${ex.valor} ${ex.unidad}</p>
-                            <p><strong>Fecha:</strong> ${ex.fecha || ex.fechaFormateada || 'Fecha no disponible'}</p>
+                            <p><strong>Fecha del examen:</strong> ${ex.fecha || ex.fechaFormateada || 'Fecha no disponible'}</p>
                     `;
                     
                     if (ex.historial && ex.historial.length > 0) {
@@ -2633,11 +2938,15 @@
         // Exponer funciones globalmente
         window.cambiarCategoria = cambiarCategoria;
         window.guardarPacienteCompleto = guardarPacienteCompleto;
+        window.agregarMedicamento = agregarMedicamento;
+        window.eliminarMedicamento = eliminarMedicamento;
         window.buscarPaciente = buscarPaciente;
         window.limpiarBusqueda = limpiarBusqueda;
         window.mostrarFormularioEdicion = mostrarFormularioEdicion;
         window.cancelarEdicion = cancelarEdicion;
         window.guardarEdicionPaciente = guardarEdicionPaciente;
+        window.agregarMedicamentoEdicion = agregarMedicamentoEdicion;
+        window.agrpZEAWYtiB6bJ16NuLbGCc6CZ6jJdKfb63 = agrpZEAWYtiB6bJ16NuLbGCc6CZ6jJdKfb63;
         window.mostrarFormularioSeguimiento = mostrarFormularioSeguimiento;
         window.ocultarFormularioSeguimiento = ocultarFormularioSeguimiento;
         window.guardarNuevoSeguimiento = guardarNuevoSeguimiento;
